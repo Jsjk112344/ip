@@ -26,10 +26,24 @@ public class Hirono {
         writer.println("What can I do for you?\n");
 
         writer.println(line);
+        writer.println("What would you like me to echo?\n");
+        writer.flush();
+        String input = reader.readLine();
 
+        while(!input.equals("bye")) {
+            writer.println(line);
+            writer.println(input);
+            writer.println(line);
+            writer.println("What would you like me to echo next?\n");
+            writer.flush();
+            input = reader.readLine();
+        }
+        writer.println(line);
         writer.println("Bye. Hope to see you again soon!\n");
+        writer.println(line + "\n");
 
-
+        
         writer.close();
+        reader.close();
     }
 }
