@@ -1,42 +1,20 @@
-
 class Event extends Task {
+    public Event(String description) throws HironoException {
+        super(description, "E");
+        if (!isValidEvent(description)) {
+            throw new HironoException("The event command is not in the correct format.");
+        }
+    }
 
-    String description;
-
-    public Event(String description) {
-        super(description, "D");
-        this.description = description;
+    private boolean isValidEvent(String description) {
+        String eventRegex = "^event\\s+.+\\s+/from\\s+.+\\s+\\d+(am|pm)?\\s+/to\\s+\\d+(am|pm)?$";
+        return description.matches(eventRegex);
     }
 
     @Override
     public String handleDescription(String input) {
-        String[] split = description.split(" ");
-        StringBuilder output = new StringBuilder();
-        Integer fromIndex = -1;
-        Integer toIndex = -1;
-        for (int i = 0; i < split.length; i++) {
-            if (split[i].equals("/from")) {
-                fromIndex = i;
-            } if (split[i].equals("/to")) {
-                toIndex = i;
-            }
-        }
-        for (int i = 1; i < fromIndex; i++) {
-            output.append(split[i] + " ");
-        }
-        output.append("(from: ");
-        for (int i = fromIndex + 1; i < toIndex; i++) {
-            output.append(split[i] + " ");
-        }
-        output.append("to: ");
-        for (int i = toIndex + 1; i < split.length; i++) {
-            output.append(split[i] + " ");
-        }
-        return output.toString().trim() + ")";
+        String[] parts = input.split("/from|/to");
+        return parts[0].replace("event", "").trim() +
+               " (from: " + parts[1].trim() + " to: " + parts[2].trim() + ")";
     }
-
-    public String toString() {
-        return "[E]" + super.getStatusIcon() + " " + handleDescription(description);
-    }
-
 }

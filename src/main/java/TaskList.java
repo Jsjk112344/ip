@@ -1,21 +1,27 @@
 import java.util.HashMap;
 import java.util.Map;
 
-
 class TaskList {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private int taskCounter = 1;
-    private String type;
 
-    public String addTask(String description, String type) {
+    public String addTask(String description, String type) throws HironoException {
         StringBuilder output = new StringBuilder();
-        if (type.equals("deadline")) {
-            tasks.put(taskCounter, new Deadline(description));
-        } else if (type.equals("todo")) {
-            tasks.put(taskCounter, new ToDo(description));
-        } else if (type.equals("event")) {
-            tasks.put(taskCounter, new Event(description));
+        Task task;
+        switch (type) {
+            case "todo":
+                task = new ToDo(description);
+                break;
+            case "deadline":
+                task = new Deadline(description);
+                break;
+            case "event":
+                task = new Event(description);
+                break;
+            default:
+                throw new HironoException("Invalid task type.");
         }
+        tasks.put(taskCounter, task);
         output.append("Got it. I've added this task:\n");
         output.append(tasks.get(taskCounter).toString() + "\n");
         output.append("Now you have " + taskCounter + " tasks in the list.");
@@ -23,6 +29,21 @@ class TaskList {
         return output.toString();
     }
 
+    public String deleteTask(Integer taskId) throws HironoException {
+        if (!tasks.containsKey(taskId)) {
+            throw new HironoException("The item you are attempting to delete is out of the range of the list.");
+        }
+
+        StringBuilder output = new StringBuilder();
+        output.append("Noted. I've removed this task:\n");
+        output.append(tasks.get(taskId) + "\n");
+        tasks.remove(taskId); 
+        reorderTasks(); 
+        output.append("Now you have " + tasks.size() + " tasks in the list.");
+        return output.toString();
+    }
+
+    // Marks a task as done
     public void markTask(int taskId) {
         Task task = tasks.get(taskId);
         if (task != null) {
@@ -50,5 +71,17 @@ class TaskList {
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
             System.out.println(entry.getKey() + ". " + entry.getValue());
         }
+    }
+
+    private void reorderTasks() {
+        HashMap<Integer, Task> reorderedTasks = new HashMap<>();
+        int newTaskId = 1;
+
+        for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
+            reorderedTasks.put(newTaskId, entry.getValue());
+            newTaskId++;
+        }
+
+        tasks = reorderedTasks; 
     }
 }
