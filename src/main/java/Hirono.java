@@ -1,4 +1,6 @@
 import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Hirono {
     public static String line = "\n--------------------------------------------------";
@@ -34,21 +36,30 @@ public class Hirono {
         String input = reader.readLine();
 
         while (!input.equals("bye")) {
-            // writer.println(line);
-
-            if (input.equals("list")) {
-                taskList.listTasks();
-            } else if (input.startsWith("mark")) {
-                int taskId = Integer.parseInt(input.split(" ")[1]);
-                taskList.markTask(taskId);
-            } else if (input.startsWith("unmark")) {
-                int taskId = Integer.parseInt(input.split(" ")[1]);
-                taskList.unmarkTask(taskId);
-            } 
-            
-            else {
-                writer.println(taskList.addTask(input, input.split(" ")[0]));
-                writer.flush();
+            try {
+                if (input.equals("list")) {
+                    taskList.listTasks();
+                } else if (input.startsWith("mark")) {
+                    int taskId = parseTaskId(input, "mark");
+                    taskList.markTask(taskId);
+                } else if (input.startsWith("unmark")) {
+                    int taskId = parseTaskId(input, "unmark");
+                    taskList.unmarkTask(taskId);
+                } else if (input.startsWith("todo")) {
+                    writer.println(taskList.addTask(input, "todo"));
+                } else if (input.startsWith("deadline")) {
+                    isValidDeadline(input);
+                    writer.println(taskList.addTask(input, "deadline"));
+                } else if (input.startsWith("event")) {
+                    isValidEvent(input);
+                    writer.println(taskList.addTask(input, "event"));
+                } else {
+                    throw new HironoException("I'm sorry, but I don't know what that means.");
+                }
+            } catch (HironoException e) {
+                writer.println("Error: " + e.getMessage());
+            } catch (NumberFormatException e) {
+                writer.println("Error: Task ID must be a valid number.");
             }
 
             writer.println(line);
@@ -62,5 +73,41 @@ public class Hirono {
 
         writer.close();
         reader.close();
+    }
+
+    private static boolean isValidEvent(String description) throws HironoException{
+        String eventRegex = "^event\\s+.+\\s+/from\\s+.+\\s+\\d+(am|pm)?\\s+/to\\s+\\d+(am|pm)?$";
+        Pattern pattern = Pattern.compile(eventRegex);
+        Matcher matcher = pattern.matcher(description);
+        if (!matcher.matches()) {
+            throw new HironoException("The event command is not in the correct format.");
+        }
+        return matcher.matches();
+    }
+    private static boolean isValidDeadline(String description) throws HironoException{
+        String eventRegex = "^deadline\s+.+\s+/by\s+.+$";
+        Pattern pattern = Pattern.compile(eventRegex);
+        Matcher matcher = pattern.matcher(description);
+        if (!matcher.matches()) {
+            throw new HironoException("The deadline command is not in the correct format.");
+        }
+        return matcher.matches();
+    }
+
+    
+    private static int parseTaskId(String input, String command) throws HironoException {
+        String[] parts = input.split(" ");
+        if (parts.length < 2) {
+            throw new HironoException("The " + command + " command requires a task ID.");
+        }
+        return Integer.parseInt(parts[1]);
+    }
+
+    private static String parseTaskDescription(String input, String command) throws HironoException {
+        String[] parts = input.split(" ", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new HironoException("The description of a " + command + " cannot be empty.");
+        }
+        return parts[1].trim();
     }
 }
