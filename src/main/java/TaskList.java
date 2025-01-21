@@ -16,7 +16,7 @@ class TaskList {
         } else if (type.equals("event")) {
             tasks.put(taskCounter, new Event(description));
         }
-        output.append("Got it. I've added this task: \n");
+        output.append("Got it. I've added this task:\n");
         output.append(tasks.get(taskCounter).toString() + "\n");
         output.append("Now you have " + taskCounter + " tasks in the list.");
         taskCounter++;
