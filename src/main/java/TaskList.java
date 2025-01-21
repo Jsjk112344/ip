@@ -1,14 +1,26 @@
 import java.util.HashMap;
 import java.util.Map;
 
+
 class TaskList {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private int taskCounter = 1;
+    private String type;
 
-    public void addTask(String description) {
-        tasks.put(taskCounter, new Task(description));
-        System.out.println("Added: " + description);
+    public String addTask(String description, String type) {
+        StringBuilder output = new StringBuilder();
+        if (type.equals("deadline")) {
+            tasks.put(taskCounter, new Deadline(description));
+        } else if (type.equals("todo")) {
+            tasks.put(taskCounter, new ToDo(description));
+        } else if (type.equals("event")) {
+            tasks.put(taskCounter, new Event(description));
+        }
+        output.append("Got it. I've added this task: \n");
+        output.append(tasks.get(taskCounter).toString() + "\n");
+        output.append("Now you have " + taskCounter + " tasks in the list.");
         taskCounter++;
+        return output.toString();
     }
 
     public void markTask(int taskId) {
@@ -16,7 +28,7 @@ class TaskList {
         if (task != null) {
             task.markAsDone();
             System.out.println("Nice! I've marked this task as done:");
-            System.out.println(taskId + ". " + task);
+            System.out.println(taskId + ". " + task.toString());
         } else {
             System.out.println("Task ID not found!");
         }

@@ -44,8 +44,11 @@ public class Hirono {
             } else if (input.startsWith("unmark")) {
                 int taskId = Integer.parseInt(input.split(" ")[1]);
                 taskList.unmarkTask(taskId);
-            } else {
-                taskList.addTask(input);
+            } 
+            
+            else {
+                writer.println(taskList.addTask(input, input.split(" ")[0]));
+                writer.flush();
             }
 
             writer.println(line);
