@@ -1,3 +1,5 @@
+package hirono;
+
 import java.io.*;
 
 public class Hirono {
