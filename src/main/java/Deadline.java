@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -35,6 +36,11 @@ class Deadline extends Task {
     private LocalDateTime parseDateTime(String dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return LocalDateTime.parse(dateTime.trim(), formatter);
+    }
+
+    public boolean isOnDate(LocalDate date) {
+        LocalDate deadlineDate = deadlineTime.toLocalDate();
+        return (date.equals(deadlineDate));
     }
 
     @Override

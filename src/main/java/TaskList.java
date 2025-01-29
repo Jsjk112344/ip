@@ -1,4 +1,9 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TaskList {
@@ -80,6 +85,52 @@ public class TaskList {
         System.out.println("Here are the tasks in your list:");
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
             System.out.println(entry.getKey() + ". " + entry.getValue());
+        }
+    }
+
+    public String getEventsOnDate(String input) throws HironoException {
+        // Split the input by space and validate format
+        String[] parts = input.split(" ");
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new HironoException("The date command requires a date in yyyy-MM-dd format.");
+        }
+
+        LocalDate date;
+        try {
+            // Parse the date
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            date = LocalDate.parse(parts[1].trim(), formatter);
+        } catch (DateTimeParseException e) {
+            throw new HironoException("Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
+        }
+
+        // Filter events and deadlines on the specified date
+        List<Task> eventsOnDate = new ArrayList<>();
+        for (Task task : tasks.values()) {
+            if (task instanceof Event) {
+                Event event = (Event) task;
+                if (event.isOnDate(date)) {
+                    eventsOnDate.add(event);
+                }
+            } else if (task instanceof Deadline) {
+                Deadline deadline = (Deadline) task;
+                if (deadline.isOnDate(date)) {
+                    eventsOnDate.add(deadline);
+                }
+            }
+        }
+
+        // Build and return the result
+        if (eventsOnDate.isEmpty()) {
+            return "No events or deadlines found on " + date;
+        } else {
+            StringBuilder result = new StringBuilder("Here are the events and deadlines on " + date + ":\n");
+            int counter = 1;
+            for (Task task : eventsOnDate) {
+                result.append(counter).append(". ").append(task.toString()).append("\n");
+                counter++;
+            }
+            return result.toString().trim();
         }
     }
 

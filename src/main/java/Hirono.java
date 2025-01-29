@@ -61,6 +61,9 @@ public class Hirono {
                     writer.println(taskList.addTask(input, "deadline"));
                 } else if (input.startsWith("event")) {
                     writer.println(taskList.addTask(input, "event"));
+                } else if (input.startsWith("date")) {
+                    writer.println(taskList.getEventsOnDate(input));
+                    
                 } else {
                     throw new HironoException("I'm sorry, but I don't know what that means.");
                 }
