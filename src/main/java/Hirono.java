@@ -3,7 +3,7 @@ import java.io.*;
 public class Hirono {
     public static String line = "\n--------------------------------------------------";
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, HironoException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         PrintWriter writer = new PrintWriter(System.out);
 
@@ -32,6 +32,15 @@ public class Hirono {
 
         TaskList taskList = new TaskList();
         String input = reader.readLine();
+        Storage storage = new Storage("./data/hirono.txt");
+        try {
+            taskList = storage.loadTasks();
+            taskList.listTasks();
+        } catch (IOException e) {
+            writer.println("Error loading tasks. Starting with an empty task list.");
+            taskList = new TaskList();
+        }
+
 
         while (!input.equals("bye")) {
             try {
@@ -39,6 +48,7 @@ public class Hirono {
                     taskList.listTasks();
                 } else if (input.startsWith("delete")) {
                     int taskId = parseTaskId(input, "delete");
+                    storage.deleteTask(taskId);
                     writer.println(taskList.deleteTask(taskId));
                 } else if (input.startsWith("mark")) {
                     int taskId = parseTaskId(input, "mark");
@@ -55,6 +65,8 @@ public class Hirono {
                 } else {
                     throw new HironoException("I'm sorry, but I don't know what that means.");
                 }
+                storage.saveTasks(taskList);
+
             } catch (HironoException e) {
                 writer.println("Error: " + e.getMessage());
             } catch (NumberFormatException e) {

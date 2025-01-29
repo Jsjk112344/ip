@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-class TaskList {
+public class TaskList {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private int taskCounter = 1;
 
@@ -28,6 +28,12 @@ class TaskList {
         taskCounter++;
         return output.toString();
     }
+    // Adds a task loaded from the file without incrementing the counter
+    public void addLoadedTask(Task task) {
+        tasks.put(taskCounter, task);
+        taskCounter++;
+    }
+
 
     public String deleteTask(Integer taskId) throws HironoException {
         if (!tasks.containsKey(taskId)) {
@@ -41,6 +47,10 @@ class TaskList {
         reorderTasks(); 
         output.append("Now you have " + tasks.size() + " tasks in the list.");
         return output.toString();
+    }
+
+    public HashMap<Integer, Task> getTasks() {
+        return this.tasks;
     }
 
     // Marks a task as done

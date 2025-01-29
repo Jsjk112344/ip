@@ -2,6 +2,16 @@ class ToDo extends Task {
     public ToDo(String description) {
         super(description, "T");
     }
+    @Override
+    public String toFileFormat() {
+        String processedDescription = handleDescription(getDescription());
+        return String.format("%s | %d | %s", 
+                            getTypeIcon().substring(1, 2), 
+                            isDone() ? 1 : 0, 
+                            processedDescription);
+    }
+
+
 
     @Override
     public String handleDescription(String input) {
