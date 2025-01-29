@@ -35,7 +35,6 @@ public class Hirono {
         Storage storage = new Storage("./data/hirono.txt");
         try {
             taskList = storage.loadTasks();
-            taskList.listTasks();
         } catch (IOException e) {
             writer.println("Error loading tasks. Starting with an empty task list.");
             taskList = new TaskList();
