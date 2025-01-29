@@ -12,7 +12,9 @@ abstract class Task {
     public void markAsDone() {
         isDone = true;
     }
-
+    public boolean isDone() {
+        return this.isDone;
+    }
     public void unmark() {
         isDone = false;
     }
@@ -30,6 +32,10 @@ abstract class Task {
     }
 
     public abstract String handleDescription(String input);
+
+    public String toFileFormat() {
+        return String.format("%s | %d | %s", getTypeIcon().substring(1, 2), isDone ? 1 : 0, getDescription());
+    }
 
     @Override
     public String toString() {

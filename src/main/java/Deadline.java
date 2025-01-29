@@ -2,7 +2,7 @@ class Deadline extends Task {
     public Deadline(String description) throws HironoException {
         super(description, "D");
         if (!isValidDeadline(description)) {
-            throw new HironoException("The deadline command is not in the correct format.");
+            throw new HironoException("The deadline command is not in the correct format: deadline [deadline name] /by [time]");
         }
     }
 
@@ -10,6 +10,13 @@ class Deadline extends Task {
         String deadlineRegex = "^deadline\\s+.+\\s+/by\\s+.+$";
         return description.matches(deadlineRegex);
     }
+    
+    @Override
+    public String toFileFormat() {
+        String[] parts = handleDescription(getDescription()).split("\\(by: ");
+        return String.format("D | %d | %s | %s", isDone() ? 1 : 0, parts[0].trim(), parts[1].replace(")", "").trim());
+    }
+
 
     @Override
     public String handleDescription(String input) {
