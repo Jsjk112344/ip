@@ -1,41 +1,33 @@
 package hirono;
 
-import java.io.IOException;
+import hirono.commands.*;
 
 public class Parser {
-
-    public boolean isExitCommand(String input) {
-        return input.equals("bye");
-    }
-
-    public void handleCommand(String input, TaskList taskList, Ui ui, Storage storage) throws HironoException, IOException {
+    public Command parse(String input) throws HironoException {
         if (input.equals("list")) {
-            taskList.listTasks();
+            return new ListCommand();
         } else if (input.startsWith("delete")) {
             int taskId = parseTaskId(input, "delete");
-            storage.deleteTask(taskId);
-            ui.showMessage(taskList.deleteTask(taskId));
+            return new DeleteCommand(taskId);
         } else if (input.startsWith("mark")) {
             int taskId = parseTaskId(input, "mark");
-            taskList.markTask(taskId);
-            ui.showMessage("Task " + taskId + " marked as done.");
+            return new MarkCommand(taskId);
         } else if (input.startsWith("unmark")) {
             int taskId = parseTaskId(input, "unmark");
-            taskList.unmarkTask(taskId);
-            ui.showMessage("Task " + taskId + " marked as not done.");
+            return new UnmarkCommand(taskId);
         } else if (input.startsWith("todo")) {
-            ui.showMessage(taskList.addTask(input, "todo"));
+            return new AddCommand(input, "todo");
         } else if (input.startsWith("deadline")) {
-            ui.showMessage(taskList.addTask(input, "deadline"));
+            return new AddCommand(input, "deadline");
         } else if (input.startsWith("event")) {
-            ui.showMessage(taskList.addTask(input, "event"));
+            return new AddCommand(input, "event");
         } else if (input.startsWith("date")) {
-            ui.showMessage(taskList.getEventsOnDate(input));
+            return new DateCommand(input);
+        } else if (input.equals("bye")) {
+            return new ExitCommand();
         } else {
             throw new HironoException("I'm sorry, but I don't know what that means.");
         }
-
-        storage.saveTasks(taskList);
     }
 
     private int parseTaskId(String input, String command) throws HironoException {
@@ -46,3 +38,4 @@ public class Parser {
         return Integer.parseInt(parts[1]);
     }
 }
+
