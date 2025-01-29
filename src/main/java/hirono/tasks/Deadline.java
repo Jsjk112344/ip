@@ -1,11 +1,12 @@
-package hirono;
+package hirono.tasks;
 
+import hirono.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-class Deadline extends Task {
+public class Deadline extends Task {
     private LocalDateTime deadlineTime;
 
     public Deadline(String description) throws HironoException {

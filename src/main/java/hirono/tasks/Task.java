@@ -1,6 +1,7 @@
-package hirono;
+package hirono.tasks;
 
-abstract class Task {
+
+public abstract class Task {
     private boolean isDone;
     private String description;
     private String type; 

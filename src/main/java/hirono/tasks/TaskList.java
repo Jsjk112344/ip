@@ -1,5 +1,7 @@
-package hirono;
+package hirono.tasks;
 
+import hirono.*;
+import hirono.commands.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

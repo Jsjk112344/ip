@@ -1,5 +1,6 @@
 package hirono;
 import hirono.commands.*;
+import hirono.tasks.*;
 import java.io.*;
 
 public class Hirono {

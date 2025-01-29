@@ -1,12 +1,12 @@
-package hirono;
+package hirono.tasks;
 
+import hirono.*;
 import java.time.LocalDate;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-class Event extends Task {
+public class Event extends Task {
     private LocalDateTime fromTime;
     private LocalDateTime toTime;
 
