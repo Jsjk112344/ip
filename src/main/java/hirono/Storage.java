@@ -126,21 +126,21 @@ public class Storage {
             String description = parts[2].trim();
 
             switch (type) {
-                case "T":
-                    ToDo todo = new ToDo("todo " + description);
-                    if (isDone) todo.markAsDone();
-                    taskList.addLoadedTask(todo);
-                    break;
-                case "D":
-                    Deadline deadline = new Deadline("deadline " + description + " /by " + parts[3].trim());
-                    if (isDone) deadline.markAsDone();
-                    taskList.addLoadedTask(deadline);
-                    break;
-                case "E":
-                    Event event = new Event("event " + description + " /from " + parts[3].trim() + " /to " + parts[4].trim());
-                    if (isDone) event.markAsDone();
-                    taskList.addLoadedTask(event);
-                    break;
+            case "T":
+                ToDo todo = new ToDo("todo " + description);
+                if (isDone) todo.markAsDone();
+                taskList.addLoadedTask(todo);
+                break;
+            case "D":
+                Deadline deadline = new Deadline("deadline " + description + " /by " + parts[3].trim());
+                if (isDone) deadline.markAsDone();
+                taskList.addLoadedTask(deadline);
+                break;
+            case "E":
+                Event event = new Event("event " + description + " /from " + parts[3].trim() + " /to " + parts[4].trim());
+                if (isDone) event.markAsDone();
+                taskList.addLoadedTask(event);
+                break;
             }
         }
         scanner.close();
