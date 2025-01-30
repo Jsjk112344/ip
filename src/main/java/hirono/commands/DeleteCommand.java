@@ -3,6 +3,9 @@ import hirono.*;
 import hirono.tasks.*;
 import java.io.IOException;
 
+/**
+ * Represents a command to delete a specific item from the list
+ */
 public class DeleteCommand extends Command {
     private final int taskId;
 
@@ -10,6 +13,15 @@ public class DeleteCommand extends Command {
         this.taskId = taskId;
     }
 
+    
+    /** 
+     * Executes a delete command on the task specific by its task id
+     * @param taskList
+     * @param ui
+     * @param storage
+     * @throws IOException
+     * @throws HironoException
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws IOException, HironoException {
         storage.deleteTask(taskId);

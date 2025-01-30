@@ -8,6 +8,10 @@ import hirono.commands.AddCommand;
 import hirono.commands.Command;
 
 public class ParserTest {
+    
+    /** 
+     * @throws HironoException
+     */
     @Test
     public void testParseValidCommand() throws HironoException {
         Parser parser = new Parser();

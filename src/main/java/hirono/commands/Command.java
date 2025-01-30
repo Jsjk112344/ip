@@ -4,6 +4,7 @@ import hirono.tasks.*;
 import java.io.IOException;
 
 public abstract class Command {
+
     /**
      * Executes the command with the given context.
      *

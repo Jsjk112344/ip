@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+
 public class Ui {
     private final BufferedReader reader;
     private final PrintWriter writer;
@@ -37,6 +38,11 @@ public class Ui {
         writer.println(line);
     }
 
+    
+    /** 
+     * @return String
+     * @throws IOException
+     */
     public String readCommand() throws IOException {
         return reader.readLine();
     }

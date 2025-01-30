@@ -10,6 +10,16 @@ public class MarkCommand extends Command {
         this.taskId = taskId;
     }
 
+    
+    /** 
+     * Marks a specific task as done, 
+     * if the item is already done, there will not be any change in behaviour
+     * @param taskList
+     * @param ui
+     * @param storage
+     * @throws IOException
+     * @throws HironoException
+     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws IOException, HironoException {
         taskList.markTask(taskId);

@@ -14,6 +14,13 @@ public class TaskList {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private int taskCounter = 1;
 
+    
+    /** 
+     * @param description
+     * @param type
+     * @return String
+     * @throws HironoException
+     */
     public String addTask(String description, String type) throws HironoException {
         StringBuilder output = new StringBuilder();
         Task task;
