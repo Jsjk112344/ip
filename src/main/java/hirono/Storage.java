@@ -7,14 +7,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Handles the saving and loading of tasks to and from a file.
+ * This class is responsible for managing the persistence of tasks, ensuring
+ * the task list is stored in and retrieved from the storage file.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Constructs a Storage object for managing the specified file path.
+     *
+     * @param filePath The file path where tasks will be stored and retrieved.
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
         ensureFileExists();
     }
 
+    /**
+     * Ensures the storage file and its parent directory exist.
+     * Creates the file and directory if they do not exist.
+     */
     private void ensureFileExists() {
         File file = new File(filePath);
         try {
@@ -30,6 +44,13 @@ public class Storage {
         }
     }
 
+    /**
+     * Deletes a task from the storage file by its task number.
+     *
+     * @param taskNumber The number of the task to delete (1-based index).
+     * @throws HironoException If the file does not exist or the task number is invalid.
+     * @throws IOException      If an error occurs during file I/O operations.
+     */
     public void deleteTask(Integer taskNumber) throws HironoException, IOException {
         File file = new File(filePath);
 
@@ -47,11 +68,13 @@ public class Storage {
             }
         }
 
+        // Validate the task number
         if (taskNumber <= 0 || taskNumber > lines.size()) {
             throw new HironoException("Invalid task number. Task does not exist.");
         }
-        lines.remove(taskNumber - 1); 
 
+        // Remove the task and update the file
+        lines.remove(taskNumber - 1);
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (String updatedLine : lines) {
                 writer.write(updatedLine);
@@ -60,8 +83,12 @@ public class Storage {
         }
     }
 
-
-    // Saves the task list to the file
+    /**
+     * Saves the current task list to the storage file.
+     *
+     * @param taskList The task list to save.
+     * @throws IOException If an error occurs during saving to the file.
+     */
     public void saveTasks(TaskList taskList) throws IOException {
         FileWriter writer = new FileWriter(filePath);
         for (Map.Entry<Integer, Task> entry : taskList.getTasks().entrySet()) {
@@ -71,19 +98,26 @@ public class Storage {
         writer.close();
     }
 
-    // Loads tasks from the file and returns a TaskList
+    /**
+     * Loads tasks from the storage file and returns them as a TaskList.
+     *
+     * @return The TaskList containing the tasks loaded from the file.
+     * @throws IOException      If an error occurs during reading from the file.
+     * @throws HironoException If the task format in the file is invalid.
+     */
     public TaskList loadTasks() throws HironoException, IOException {
         TaskList taskList = new TaskList();
         File file = new File(filePath);
 
+        // Ensure the file exists
         if (!file.exists()) {
-            // Create the file if it doesn't exist
             file.getParentFile().mkdirs();
             file.createNewFile();
         }
 
         Scanner scanner = new Scanner(file);
 
+        // Parse each line and add the task to the TaskList
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             String[] parts = line.split("\\|");

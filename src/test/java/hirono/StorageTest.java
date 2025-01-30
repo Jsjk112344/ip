@@ -31,6 +31,11 @@ public class StorageTest {
         }
     }
 
+    
+    /** 
+     * @throws IOException
+     * @throws HironoException
+     */
     @Test
     public void testSaveAndLoadTasks() throws IOException, HironoException {
         // Add tasks

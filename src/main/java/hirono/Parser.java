@@ -3,6 +3,12 @@ package hirono;
 import hirono.commands.*;
 
 public class Parser {
+    
+    /** 
+     * @param input
+     * @return Command
+     * @throws HironoException
+     */
     public Command parse(String input) throws HironoException {
         if (input.equals("list")) {
             return new ListCommand();

@@ -15,6 +15,10 @@ public abstract class Task {
     public void markAsDone() {
         isDone = true;
     }
+    
+    /** 
+     * @return boolean
+     */
     public boolean isDone() {
         return this.isDone;
     }
