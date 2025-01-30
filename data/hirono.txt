@@ -1,4 +1,1 @@
-T | 0 | read book
-D | 0 | return book | 2023-06-06 1800
-T | 1 | join sports club
-D | 0 | return book | 2023-06-11 1800
+E | 0 | joshua's birthday party | 2023-11-02 1800 | 2023-11-02 2000
