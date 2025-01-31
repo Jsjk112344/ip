@@ -1,7 +1,5 @@
 package hirono.tasks;
 
-import hirono.*;
-import hirono.commands.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -9,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import hirono.HironoException;
 
 public class TaskList {
     private HashMap<Integer, Task> tasks = new HashMap<>();
@@ -98,6 +98,38 @@ public class TaskList {
             System.out.println(entry.getKey() + ". " + entry.getValue());
         }
     }
+    
+    public String findTasks(String input) throws HironoException {
+        // Split the input by space and validate format
+        String[] parts = input.split(" ", 2);
+        if (parts.length < 2 || parts[1].trim().isEmpty()) {
+            throw new HironoException("The find command requires a search term. Please use: find [search term]");
+        }
+    
+        String searchTerm = parts[1].trim().toLowerCase(); // Extract and normalize the search term
+        List<Task> matchingTasks = new ArrayList<>();
+    
+        // Search through all tasks for matches
+        for (Task task : tasks.values()) {
+            if (task.getDescription().toLowerCase().contains(searchTerm)) {
+                matchingTasks.add(task);
+            }
+        }
+    
+        // Build and return the result
+        if (matchingTasks.isEmpty()) {
+            return "No tasks found matching \"" + searchTerm + "\".";
+        } else {
+            StringBuilder result = new StringBuilder("Here are the matching tasks:\n");
+            int counter = 1;
+            for (Task task : matchingTasks) {
+                result.append(counter).append(". ").append(task.toString()).append("\n");
+                counter++;
+            }
+            return result.toString().trim();
+        }
+    }
+    
 
     public String findTasks(String input) throws HironoException {
     // Split the input by space and validate format

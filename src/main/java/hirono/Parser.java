@@ -1,6 +1,15 @@
 package hirono;
 
-import hirono.commands.*;
+import hirono.commands.Command;
+import hirono.commands.ListCommand;
+import hirono.commands.DeleteCommand;
+import hirono.commands.MarkCommand;
+import hirono.commands.UnmarkCommand;
+import hirono.commands.AddCommand;
+import hirono.commands.DateCommand;
+import hirono.commands.ExitCommand;
+import hirono.commands.FindCommand;
+
 
 public class Parser {
     
@@ -29,6 +38,8 @@ public class Parser {
             return new AddCommand(input, "event");
         } else if (input.startsWith("date")) {
             return new DateCommand(input);
+        } else if (input.startsWith("find")) {
+            return new FindCommand(input);
         } else if (input.equals("bye")) {
             return new ExitCommand();
         } else {

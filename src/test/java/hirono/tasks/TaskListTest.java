@@ -97,28 +97,32 @@ public class TaskListTest {
         assertEquals("Here are the events on 2023-12-02:\n" +
                      "1. [E][ ] birthday party (from: 2 Dec 2023, 6:00pm to: 2 Dec 2023, 9:00pm)", result);
     }
-    // @Test
-    // public void testListTasks() throws Exception {
-    //     // Add tasks to the task list
-    //     taskList.addTask("todo read book", "todo");
-    //     taskList.addTask("deadline submit report /by 2023-11-02 1800", "deadline");
-    //     taskList.addTask("event team meeting /from 2023-11-02 1400 /to 2023-11-02 1600", "event");
+    @Test
+    public void testFindTasks() throws Exception {
+        // Add tasks to the task list
+        taskList.addTask("todo read book", "todo");
+        taskList.addTask("deadline submit report /by 2023-11-02 1800", "deadline");
+        taskList.addTask("event team meeting /from 2023-11-02 1400 /to 2023-11-02 1600", "event");
+        taskList.addTask("todo borrow book", "todo");
+        taskList.addTask("event book launch /from 2023-11-05 1800 /to 2023-11-05 2000", "event");
 
-    //     // Call listTasks
-    //     taskList.listTasks();
+        // Test finding tasks with a single word
+        String result = taskList.findTasks("find book");
+        assertEquals("Here are the matching tasks:\n" +
+                    "1. [T][ ] read book\n" +
+                    "2. [T][ ] borrow book\n" +
+                    "3. [E][ ] book launch (from: 5 Nov 2023, 6:00pm to: 5 Nov 2023, 8:00pm)", result);
 
-    //     // Capture the output
-    //     String result = outputStream.toString();
+        // Test finding tasks with a phrase
+        result = taskList.findTasks("find team meeting");
+        assertEquals("Here are the matching tasks:\n" +
+                    "1. [E][ ] team meeting (from: 2 Nov 2023, 2:00pm to: 2 Nov 2023, 4:00pm)", result);
 
-    //     // Expected output
-    //     String expected = "Here are the tasks in your list:\n" +
-    //                       "1. [T][ ] read book\n" +
-    //                       "2. [D][ ] submit report (by: 2 Nov 2023, 6:00pm)\n" +
-    //                       "3. [E][ ] team meeting (from: 2 Nov 2023, 2:00pm to: 2 Nov 2023, 4:00pm)";
+        // Test finding tasks with no matches
+        result = taskList.findTasks("find nonexistent task");
+        assertEquals("No tasks found matching \"nonexistent task\".", result);
+    }
 
-    //     // Assert the output matches the expected result
-    //     assertEquals(expected, result);
-    // }
 
     @Test
     public void testListTasksEmpty() {

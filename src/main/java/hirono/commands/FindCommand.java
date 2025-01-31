@@ -1,7 +1,15 @@
 package hirono.commands;
 
+<<<<<<< HEAD
 import hirono.*;
 import hirono.tasks.*;
+=======
+
+import hirono.HironoException;
+import hirono.Ui;
+import hirono.Storage;
+import hirono.tasks.TaskList;
+>>>>>>> origin/branch-Level-9
 
 /**
  * Represents a command to list the events or deadlines on a specific date.
@@ -22,10 +30,17 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws HironoException {
+<<<<<<< HEAD
         String message = taskList.getEventsOnDate(input);
+=======
+        String message = taskList.findTasks(input);
+>>>>>>> origin/branch-Level-9
         ui.showMessage(message);
     }
 }
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/branch-Level-9
