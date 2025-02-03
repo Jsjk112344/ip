@@ -21,21 +21,22 @@ public class TaskList {
      * @return String
      * @throws HironoException
      */
+    
     public String addTask(String description, String type) throws HironoException {
         StringBuilder output = new StringBuilder();
         Task task;
         switch (type) {
-            case "todo":
-                task = new ToDo(description);
-                break;
-            case "deadline":
-                task = new Deadline(description);
-                break;
-            case "event":
-                task = new Event(description);
-                break;
-            default:
-                throw new HironoException("Invalid task type.");
+        case "todo":
+            task = new ToDo(description);
+            break;
+        case "deadline":
+            task = new Deadline(description);
+            break;
+        case "event":
+            task = new Event(description);
+            break;
+        default:
+            throw new HironoException("Invalid task type.");
         }
         tasks.put(taskCounter, task);
         output.append("Got it. I've added this task:\n");
