@@ -1,9 +1,11 @@
 package hirono.commands;
-import hirono.HironoException;
-import hirono.Ui;
-import hirono.Storage;
-import hirono.tasks.TaskList;
+
 import java.io.IOException;
+
+import hirono.HironoException;
+import hirono.Storage;
+import hirono.Ui;
+import hirono.tasks.TaskList;
 
 /**
  * Represents a command to delete a specific item from the list
@@ -15,8 +17,7 @@ public class DeleteCommand extends Command {
         this.taskId = taskId;
     }
 
-    
-    /** 
+    /**
      * Executes a delete command on the task specific by its task id
      * @param taskList
      * @param ui

@@ -1,10 +1,12 @@
 package hirono.tasks;
 
-import hirono.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import hirono.HironoException;
+
 
 /**
  * Represents a deadline task that includes a description and a deadline date and time.
@@ -16,7 +18,7 @@ public class Deadline extends Task {
     /**
      * Constructs a Deadline object with a specified description.
      *
-     * @param description The task description in the format: 
+     * @param description The task description in the format:
      *                    "deadline [task name] /by [yyyy-MM-dd HHmm]".
      * @throws HironoException If the description format is invalid or the date/time cannot be parsed.
      */
@@ -34,14 +36,15 @@ public class Deadline extends Task {
     /**
      * Parses the task description into the task name and deadline.
      *
-     * @param description The task description in the format: 
+     * @param description The task description in the format:
      *                    "deadline [task name] /by [yyyy-MM-dd HHmm]".
      * @return A string array containing the task name and deadline.
      * @throws HironoException If the description format is invalid or missing the `/by` clause.
      */
     private String[] parseDescription(String description) throws HironoException {
         if (!isValidDeadline(description)) {
-            throw new HironoException("The deadline command is not in the correct format: deadline [task name] /by [yyyy-MM-dd HHmm]");
+            throw new HironoException("The deadline command is not in the correct"
+                + "format: deadline [task name] /by [yyyy-MM-dd HHmm]");
         }
         String[] parts = description.split("/by", 2);
         if (parts.length < 2) {
@@ -91,9 +94,9 @@ public class Deadline extends Task {
     @Override
     public String toFileFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-        return String.format("D | %d | %s | %s", 
-                             isDone() ? 1 : 0, 
-                             getDescriptionWithoutDeadline(), 
+        return String.format("D | %d | %s | %s",
+                             isDone() ? 1 : 0,
+                             getDescriptionWithoutDeadline(),
                              deadlineTime.format(formatter));
     }
 

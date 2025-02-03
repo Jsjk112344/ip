@@ -15,7 +15,7 @@ public class FindCommand extends Command {
     public FindCommand(String input) {
         this.input = input;
     }
-     /**
+    /**
      * Executes the DateCommand by listing the events and deadlines on the specific date,
      *
      * @param taskList The task list to which the new task will be added.

@@ -10,18 +10,22 @@ import java.util.Map;
 
 import hirono.HironoException;
 
+/**
+ * Manages the list of tasks, providing functionality to add, delete, find,
+ * list, and manipulate tasks.
+ */
 public class TaskList {
     private HashMap<Integer, Task> tasks = new HashMap<>();
     private int taskCounter = 1;
 
-    
-    /** 
-     * @param description
-     * @param type
-     * @return String
-     * @throws HironoException
+    /**
+     * Adds a new task to the list.
+     *
+     * @param description The description of the task.
+     * @param type        The type of the task (todo, deadline, event).
+     * @return A confirmation message that the task has been added.
+     * @throws HironoException If the task type is invalid.
      */
-    
     public String addTask(String description, String type) throws HironoException {
         StringBuilder output = new StringBuilder();
         Task task;
@@ -40,18 +44,29 @@ public class TaskList {
         }
         tasks.put(taskCounter, task);
         output.append("Got it. I've added this task:\n");
-        output.append(tasks.get(taskCounter).toString() + "\n");
-        output.append("Now you have " + taskCounter + " tasks in the list.");
+        output.append(tasks.get(taskCounter).toString()).append("\n");
+        output.append("Now you have ").append(taskCounter).append(" tasks in the list.");
         taskCounter++;
         return output.toString();
     }
-    // Adds a task loaded from the file without incrementing the counter
+
+    /**
+     * Adds a task that has been loaded from storage without incrementing the task counter.
+     *
+     * @param task The task to add.
+     */
     public void addLoadedTask(Task task) {
         tasks.put(taskCounter, task);
         taskCounter++;
     }
 
-
+    /**
+     * Deletes a task from the list.
+     *
+     * @param taskId The ID of the task to delete.
+     * @return A confirmation message that the task has been removed.
+     * @throws HironoException If the task ID is invalid or out of range.
+     */
     public String deleteTask(Integer taskId) throws HironoException {
         if (!tasks.containsKey(taskId)) {
             throw new HironoException("The item you are attempting to delete is out of the range of the list.");
@@ -59,18 +74,27 @@ public class TaskList {
 
         StringBuilder output = new StringBuilder();
         output.append("Noted. I've removed this task:\n");
-        output.append(tasks.get(taskId) + "\n");
-        tasks.remove(taskId); 
-        reorderTasks(); 
-        output.append("Now you have " + tasks.size() + " tasks in the list.");
+        output.append(tasks.get(taskId)).append("\n");
+        tasks.remove(taskId);
+        reorderTasks();
+        output.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         return output.toString();
     }
 
+    /**
+     * Retrieves all tasks in the list.
+     *
+     * @return A HashMap containing all tasks.
+     */
     public HashMap<Integer, Task> getTasks() {
         return this.tasks;
     }
 
-    // Marks a task as done
+    /**
+     * Marks a task as done.
+     *
+     * @param taskId The ID of the task to mark as done.
+     */
     public void markTask(int taskId) {
         Task task = tasks.get(taskId);
         if (task != null) {
@@ -82,6 +106,11 @@ public class TaskList {
         }
     }
 
+    /**
+     * Unmarks a task as not done.
+     *
+     * @param taskId The ID of the task to unmark.
+     */
     public void unmarkTask(int taskId) {
         Task task = tasks.get(taskId);
         if (task != null) {
@@ -93,31 +122,38 @@ public class TaskList {
         }
     }
 
+    /**
+     * Lists all tasks in the list.
+     */
     public void listTasks() {
         System.out.println("Here are the tasks in your list:");
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
             System.out.println(entry.getKey() + ". " + entry.getValue());
         }
     }
-    
+
+    /**
+     * Finds tasks that match the specified search term.
+     *
+     * @param input The user input containing the search term.
+     * @return A list of matching tasks.
+     * @throws HironoException If the search term is missing or invalid.
+     */
     public String findTasks(String input) throws HironoException {
-        // Split the input by space and validate format
         String[] parts = input.split(" ", 2);
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
             throw new HironoException("The find command requires a search term. Please use: find [search term]");
         }
-    
-        String searchTerm = parts[1].trim().toLowerCase(); // Extract and normalize the search term
+
+        String searchTerm = parts[1].trim().toLowerCase();
         List<Task> matchingTasks = new ArrayList<>();
-    
-        // Search through all tasks for matches
+
         for (Task task : tasks.values()) {
             if (task.getDescription().toLowerCase().contains(searchTerm)) {
                 matchingTasks.add(task);
             }
         }
-    
-        // Build and return the result
+
         if (matchingTasks.isEmpty()) {
             return "No tasks found matching \"" + searchTerm + "\".";
         } else {
@@ -130,10 +166,15 @@ public class TaskList {
             return result.toString().trim();
         }
     }
-   
 
+    /**
+     * Lists events and deadlines occurring on a specific date.
+     *
+     * @param input The user input containing the date in yyyy-MM-dd format.
+     * @return A list of events and deadlines on the specified date.
+     * @throws HironoException If the date is invalid or incorrectly formatted.
+     */
     public String getEventsOnDate(String input) throws HironoException {
-        // Split the input by space and validate format
         String[] parts = input.split(" ");
         if (parts.length < 2 || parts[1].trim().isEmpty()) {
             throw new HironoException("The date command requires a date in yyyy-MM-dd format.");
@@ -141,14 +182,12 @@ public class TaskList {
 
         LocalDate date;
         try {
-            // Parse the date
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             date = LocalDate.parse(parts[1].trim(), formatter);
         } catch (DateTimeParseException e) {
             throw new HironoException("Invalid date format. Please use yyyy-MM-dd (e.g., 2019-12-02).");
         }
 
-        // Filter events and deadlines on the specified date
         List<Task> eventsOnDate = new ArrayList<>();
         for (Task task : tasks.values()) {
             if (task instanceof Event) {
@@ -164,7 +203,6 @@ public class TaskList {
             }
         }
 
-        // Build and return the result
         if (eventsOnDate.isEmpty()) {
             return "No events or deadlines found on " + date;
         } else {
@@ -178,6 +216,9 @@ public class TaskList {
         }
     }
 
+    /**
+     * Reorders the task list after a deletion to maintain sequential IDs.
+     */
     private void reorderTasks() {
         HashMap<Integer, Task> reorderedTasks = new HashMap<>();
         int newTaskId = 1;
@@ -187,6 +228,6 @@ public class TaskList {
             newTaskId++;
         }
 
-        tasks = reorderedTasks; 
+        tasks = reorderedTasks;
     }
 }

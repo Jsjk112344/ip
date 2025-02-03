@@ -1,10 +1,15 @@
 package hirono.commands;
-import hirono.HironoException;
-import hirono.Ui;
-import hirono.Storage;
-import hirono.tasks.TaskList;
+
 import java.io.IOException;
 
+import hirono.HironoException;
+import hirono.Storage;
+import hirono.Ui;
+import hirono.tasks.TaskList;
+
+/**
+ * Unmarks a task as completed
+ */
 public class UnmarkCommand extends Command {
     private final int taskId;
 
@@ -12,9 +17,9 @@ public class UnmarkCommand extends Command {
         this.taskId = taskId;
     }
 
-    
-    /** 
-     * Unmarks a specific task as done, 
+
+    /**
+     * Unmarks a specific task as done,
      * if the item is not yet done, there will not be any change in behaviour
      * @param taskList
      * @param ui

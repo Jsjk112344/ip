@@ -1,10 +1,11 @@
 package hirono.tasks;
 
-import hirono.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
+import hirono.HironoException;
 
 /**
  * Represents an event task that includes a description, a start time (/from), and an end time (/to).
@@ -17,9 +18,9 @@ public class Event extends Task {
     /**
      * Constructs an Event object with a specified description.
      *
-     * @param description The task description in the format: 
+     * @param description The task description in the format:
      *                    "event [event name] /from [yyyy-MM-dd HHmm] /to [yyyy-MM-dd HHmm]".
-     * @throws HironoException If the description format is invalid, the date/time cannot be parsed, 
+     * @throws HironoException If the description format is invalid, the date/time cannot be parsed,
      *                         or the /from time is after the /to time.
      */
     public Event(String description) throws HironoException {
@@ -40,14 +41,15 @@ public class Event extends Task {
     /**
      * Parses the task description into the event name, start time, and end time.
      *
-     * @param description The task description in the format: 
+     * @param description The task description in the format:
      *                    "event [event name] /from [yyyy-MM-dd HHmm] /to [yyyy-MM-dd HHmm]".
      * @return A string array containing the event name, start time, and end time.
      * @throws HironoException If the description format is invalid or missing the /from and /to clauses.
      */
     private String[] parseDescription(String description) throws HironoException {
         if (!isValidEvent(description)) {
-            throw new HironoException("The event command is not in the correct format: event [event name] /from [yyyy-MM-dd HHmm] /to [yyyy-MM-dd HHmm]");
+            throw new HironoException("The event command is not in the correct format:"
+                + "event [event name] /from [yyyy-MM-dd HHmm] /to [yyyy-MM-dd HHmm]");
         }
         String[] parts = description.split("/from|/to", 3);
         if (parts.length < 3) {
@@ -65,8 +67,8 @@ public class Event extends Task {
     public boolean isOnDate(LocalDate date) {
         LocalDate fromDate = fromTime.toLocalDate();
         LocalDate toDate = toTime.toLocalDate();
-        return (date.equals(fromDate) || date.equals(toDate)) || 
-               (date.isAfter(fromDate) && date.isBefore(toDate));
+        return (date.equals(fromDate) || date.equals(toDate))
+            || (date.isAfter(fromDate) && date.isBefore(toDate));
     }
 
     /**
@@ -99,10 +101,10 @@ public class Event extends Task {
     @Override
     public String toFileFormat() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
-        return String.format("E | %d | %s | %s | %s", 
-                             isDone() ? 1 : 0, 
-                             getDescriptionWithoutEvent(), 
-                             fromTime.format(formatter), 
+        return String.format("E | %d | %s | %s | %s",
+                             isDone() ? 1 : 0,
+                             getDescriptionWithoutEvent(),
+                             fromTime.format(formatter),
                              toTime.format(formatter));
     }
 
@@ -124,9 +126,9 @@ public class Event extends Task {
     @Override
     public String handleDescription(String input) {
         DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");
-        return getDescriptionWithoutEvent() + 
-               " (from: " + fromTime.format(displayFormatter) + 
-               " to: " + toTime.format(displayFormatter) + ")";
+        return getDescriptionWithoutEvent()
+            + " (from: " + fromTime.format(displayFormatter)
+            + " to: " + toTime.format(displayFormatter) + ")";
     }
 
     /**

@@ -5,17 +5,27 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-
+/**
+ * Handles all user interactions, including displaying messages, reading commands,
+ * and showing system messages such as errors and dividers.
+ */
 public class Ui {
     private final BufferedReader reader;
     private final PrintWriter writer;
     private final String line = "\n--------------------------------------------------";
 
+    /**
+     * Constructs a Ui object for managing user interactions.
+     * Initializes the reader and writer for input and output.
+     */
     public Ui() {
         this.reader = new BufferedReader(new InputStreamReader(System.in));
         this.writer = new PrintWriter(System.out, true);
     }
 
+    /**
+     * Displays the welcome message and the logo for the application.
+     */
     public void showWelcome() {
         String logo =
                   "                            .-'''-.                   .-'''-.     \n"
@@ -38,27 +48,44 @@ public class Ui {
         writer.println(line);
     }
 
-    
-    /** 
-     * @return String
-     * @throws IOException
+    /**
+     * Reads a command input from the user.
+     *
+     * @return The user command as a String.
+     * @throws IOException If an input/output error occurs while reading the command.
      */
     public String readCommand() throws IOException {
         return reader.readLine();
     }
 
+    /**
+     * Displays a message to the user.
+     *
+     * @param message The message to display.
+     */
     public void showMessage(String message) {
         writer.println(message);
     }
 
+    /**
+     * Displays an error message to the user.
+     *
+     * @param errorMessage The error message to display.
+     */
     public void showError(String errorMessage) {
         writer.println("Error: " + errorMessage);
     }
 
+    /**
+     * Displays a divider line to separate different sections in the output.
+     */
     public void showDivider() {
         writer.println(line);
     }
 
+    /**
+     * Displays the goodbye message when the user exits the application.
+     */
     public void showGoodbye() {
         writer.println(line);
         writer.println("Bye. Hope to see you again soon!");
