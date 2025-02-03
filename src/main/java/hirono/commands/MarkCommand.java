@@ -1,10 +1,15 @@
 package hirono.commands;
-import hirono.HironoException;
-import hirono.Ui;
-import hirono.Storage;
-import hirono.tasks.TaskList;
+
 import java.io.IOException;
 
+import hirono.HironoException;
+import hirono.Storage;
+import hirono.Ui;
+import hirono.tasks.TaskList;
+
+/**
+ * Marks a task as completed
+ */
 public class MarkCommand extends Command {
     private final int taskId;
 
@@ -12,9 +17,9 @@ public class MarkCommand extends Command {
         this.taskId = taskId;
     }
 
-    
-    /** 
-     * Marks a specific task as done, 
+
+    /**
+     * Marks a specific task as done,
      * if the item is already done, there will not be any change in behaviour
      * @param taskList
      * @param ui

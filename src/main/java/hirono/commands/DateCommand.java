@@ -1,8 +1,8 @@
 package hirono.commands;
 
 import hirono.HironoException;
-import hirono.Ui;
 import hirono.Storage;
+import hirono.Ui;
 import hirono.tasks.TaskList;
 
 /**
@@ -14,7 +14,7 @@ public class DateCommand extends Command {
     public DateCommand(String input) {
         this.input = input;
     }
-     /**
+    /**
      * Executes the DateCommand by listing the events and deadlines on the specific date,
      *
      * @param taskList The task list to which the new task will be added.

@@ -1,23 +1,24 @@
 package hirono.tasks;
 
+/**
+ * Describes a basic task to do
+ */
 public class ToDo extends Task {
     public ToDo(String description) {
         super(description, "T");
     }
-    
-    /** 
+
+    /**
      * @return String
      */
     @Override
     public String toFileFormat() {
         String processedDescription = handleDescription(getDescription());
-        return String.format("%s | %d | %s", 
-                            getTypeIcon().substring(1, 2), 
-                            isDone() ? 1 : 0, 
+        return String.format("%s | %d | %s",
+                            getTypeIcon().substring(1, 2),
+                            isDone() ? 1 : 0,
                             processedDescription);
     }
-
-
 
     @Override
     public String handleDescription(String input) {

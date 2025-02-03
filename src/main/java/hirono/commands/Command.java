@@ -1,10 +1,15 @@
 package hirono.commands;
-import hirono.HironoException;
-import hirono.Ui;
-import hirono.Storage;
-import hirono.tasks.TaskList;
+
 import java.io.IOException;
 
+import hirono.HironoException;
+import hirono.Storage;
+import hirono.Ui;
+import hirono.tasks.TaskList;
+
+/**
+* Represents the parent of all command classes
+*/
 public abstract class Command {
 
     /**

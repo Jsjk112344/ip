@@ -1,11 +1,21 @@
 package hirono;
 
-import hirono.tasks.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+
+import hirono.tasks.Deadline;
+import hirono.tasks.Event;
+import hirono.tasks.Task;
+import hirono.tasks.TaskList;
+import hirono.tasks.ToDo;
 
 /**
  * Handles the saving and loading of tasks to and from a file.
@@ -90,12 +100,12 @@ public class Storage {
      * @throws IOException If an error occurs during saving to the file.
      */
     public void saveTasks(TaskList taskList) throws IOException {
-        FileWriter writer = new FileWriter(filePath);
-        for (Map.Entry<Integer, Task> entry : taskList.getTasks().entrySet()) {
-            Task task = entry.getValue();
-            writer.write(task.toFileFormat() + System.lineSeparator());
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (Map.Entry<Integer, Task> entry : taskList.getTasks().entrySet()) {
+                Task task = entry.getValue();
+                writer.write(task.toFileFormat() + System.lineSeparator());
+            }
         }
-        writer.close();
     }
 
     /**
@@ -111,39 +121,57 @@ public class Storage {
 
         // Ensure the file exists
         if (!file.exists()) {
-            file.getParentFile().mkdirs();
+            File parentDir = file.getParentFile();
+            if (parentDir != null) {
+                parentDir.mkdirs();
+            }
             file.createNewFile();
         }
 
-        Scanner scanner = new Scanner(file);
+        try (Scanner scanner = new Scanner(file)) {
+            // Parse each line and add the task to the TaskList
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] parts = line.split("\\|");
+                String type = parts[0].trim();
+                boolean isDone = parts[1].trim().equals("1");
+                String description = parts[2].trim();
 
-        // Parse each line and add the task to the TaskList
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-            String[] parts = line.split("\\|");
-            String type = parts[0].trim();
-            boolean isDone = parts[1].trim().equals("1");
-            String description = parts[2].trim();
+                switch (type) {
+                case "T":
+                    ToDo todo = new ToDo("todo " + description);
+                    if (isDone) {
+                        todo.markAsDone();
+                    }
+                    taskList.addLoadedTask(todo);
+                    break;
 
-            switch (type) {
-            case "T":
-                ToDo todo = new ToDo("todo " + description);
-                if (isDone) todo.markAsDone();
-                taskList.addLoadedTask(todo);
-                break;
-            case "D":
-                Deadline deadline = new Deadline("deadline " + description + " /by " + parts[3].trim());
-                if (isDone) deadline.markAsDone();
-                taskList.addLoadedTask(deadline);
-                break;
-            case "E":
-                Event event = new Event("event " + description + " /from " + parts[3].trim() + " /to " + parts[4].trim());
-                if (isDone) event.markAsDone();
-                taskList.addLoadedTask(event);
-                break;
+                case "D":
+                    Deadline deadline = new Deadline(
+                        "deadline " + description + " /by " + parts[3].trim()
+                    );
+                    if (isDone) {
+                        deadline.markAsDone();
+                    }
+                    taskList.addLoadedTask(deadline);
+                    break;
+
+                case "E":
+                    Event event = new Event(
+                        "event " + description + " /from " + parts[3].trim() + " /to " + parts[4].trim()
+                    );
+                    if (isDone) {
+                        event.markAsDone();
+                    }
+                    taskList.addLoadedTask(event);
+                    break;
+
+                default:
+                    throw new HironoException("Invalid task type in file.");
+                }
             }
         }
-        scanner.close();
+
         return taskList;
     }
 }

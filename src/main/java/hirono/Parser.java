@@ -1,19 +1,22 @@
 package hirono;
 
-import hirono.commands.Command;
-import hirono.commands.ListCommand;
-import hirono.commands.DeleteCommand;
-import hirono.commands.MarkCommand;
-import hirono.commands.UnmarkCommand;
 import hirono.commands.AddCommand;
+import hirono.commands.Command;
 import hirono.commands.DateCommand;
+import hirono.commands.DeleteCommand;
 import hirono.commands.ExitCommand;
 import hirono.commands.FindCommand;
+import hirono.commands.ListCommand;
+import hirono.commands.MarkCommand;
+import hirono.commands.UnmarkCommand;
 
 
+/**
+ * parses inputs based on the type of command
+ */
 public class Parser {
-    
-    /** 
+
+    /**
      * @param input
      * @return Command
      * @throws HironoException
