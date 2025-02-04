@@ -1,4 +1,4 @@
-package hirono;
+package hirono.ui;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +13,7 @@ public class Ui {
     private final BufferedReader reader;
     private final PrintWriter writer;
     private final String line = "\n--------------------------------------------------";
+    private String latestMessage = ""; // To store the latest message for GUI.
 
     /**
      * Constructs a Ui object for managing user interactions.
@@ -26,7 +27,8 @@ public class Ui {
     /**
      * Displays the welcome message and the logo for the application.
      */
-    public void showWelcome() {
+    public String showWelcome() {
+        StringBuilder output = new StringBuilder();
         String logo =
                   "                            .-'''-.                   .-'''-.     \n"
                 + "                           '   _    \\                '   _    \\   \n"
@@ -41,11 +43,8 @@ public class Ui {
                 + " | |     | |    | |                    |  |   |  |                \n"
                 + " | '.    | '.   |_|                    |  |   |  |                \n"
                 + " '---'   '---'                         '--'   '--'                \n";
-        writer.println("Hello from\n" + logo);
-        writer.println(line);
-        writer.println("Hello! I'm Hirono");
-        writer.println("What can I do for you?");
-        writer.println(line);
+        output.append("Hello from\n" + logo + line + "\nHello! I'm Hirono\nWhat can I do for you?\n" + line);
+        return output.toString();
     }
 
     /**
@@ -65,6 +64,7 @@ public class Ui {
      */
     public void showMessage(String message) {
         writer.println(message);
+        latestMessage = message; // Update latest message for GUI.
     }
 
     /**
@@ -73,22 +73,29 @@ public class Ui {
      * @param errorMessage The error message to display.
      */
     public void showError(String errorMessage) {
-        writer.println("Error: " + errorMessage);
+        showMessage("Error: " + errorMessage);
     }
 
     /**
      * Displays a divider line to separate different sections in the output.
      */
     public void showDivider() {
-        writer.println(line);
+        showMessage(line);
     }
 
     /**
      * Displays the goodbye message when the user exits the application.
      */
     public void showGoodbye() {
-        writer.println(line);
-        writer.println("Bye. Hope to see you again soon!");
-        writer.println(line);
+        showMessage(line + "\nBye. Hope to see you again soon!\n" + line);
+    }
+
+    /**
+     * Gets the latest message for GUI interactions.
+     *
+     * @return The latest message as a String.
+     */
+    public String getLatestMessage() {
+        return latestMessage;
     }
 }

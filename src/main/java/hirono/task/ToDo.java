@@ -1,4 +1,4 @@
-package hirono.tasks;
+package hirono.task;
 
 /**
  * Describes a basic task to do

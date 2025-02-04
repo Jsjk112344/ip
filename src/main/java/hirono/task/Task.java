@@ -1,4 +1,4 @@
-package hirono.tasks;
+package hirono.task;
 
 /**
  * Represents a general task with a description, type, and completion status.

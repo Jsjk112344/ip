@@ -1,4 +1,4 @@
-package hirono.tasks;
+package hirono.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

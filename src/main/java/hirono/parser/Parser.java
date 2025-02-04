@@ -1,14 +1,15 @@
-package hirono;
+package hirono.parser;
 
-import hirono.commands.AddCommand;
-import hirono.commands.Command;
-import hirono.commands.DateCommand;
-import hirono.commands.DeleteCommand;
-import hirono.commands.ExitCommand;
-import hirono.commands.FindCommand;
-import hirono.commands.ListCommand;
-import hirono.commands.MarkCommand;
-import hirono.commands.UnmarkCommand;
+import hirono.HironoException;
+import hirono.command.AddCommand;
+import hirono.command.Command;
+import hirono.command.DateCommand;
+import hirono.command.DeleteCommand;
+import hirono.command.ExitCommand;
+import hirono.command.FindCommand;
+import hirono.command.ListCommand;
+import hirono.command.MarkCommand;
+import hirono.command.UnmarkCommand;
 
 
 /**

@@ -9,7 +9,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import hirono.tasks.TaskList;
+import hirono.storage.Storage;
+import hirono.task.TaskList;
 
 /**
  * Tests the Storage class for saving, loading, and deleting tasks.

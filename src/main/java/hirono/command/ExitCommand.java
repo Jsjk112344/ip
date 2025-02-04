@@ -1,8 +1,8 @@
-package hirono.commands;
+package hirono.command;
 
-import hirono.Storage;
-import hirono.Ui;
-import hirono.tasks.TaskList;
+import hirono.storage.Storage;
+import hirono.task.TaskList;
+import hirono.ui.Ui;
 
 /**
  * Represents the command to exit the application.

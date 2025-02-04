@@ -2,8 +2,11 @@ package hirono;
 
 import java.io.IOException;
 
-import hirono.commands.Command;
-import hirono.tasks.TaskList;
+import hirono.command.Command;
+import hirono.parser.Parser;
+import hirono.storage.Storage;
+import hirono.task.TaskList;
+import hirono.ui.Ui;
 
 /**
  * The main class for the Hirono application.
@@ -12,53 +15,90 @@ import hirono.tasks.TaskList;
  */
 public class Hirono {
 
+    private final Ui ui;
+    private final Storage storage;
+    private final Parser parser;
+    private TaskList taskList;
+
     /**
-     * The main method that runs the Hirono application.
-     * It initializes the UI, task list, storage, and parser components,
-     * and continuously processes user commands until an exit command is issued.
+     * Constructs a new instance of the Hirono application.
+     * Initializes the UI, storage, parser, and task list components.
+     *
+     * @throws IOException If there is an error reading from the storage file.
+     */
+    public Hirono() throws IOException, HironoException {
+        this.ui = new Ui();
+        this.storage = new Storage("./data/hirono.txt");
+        this.parser = new Parser();
+
+        // Load tasks from storage or initialize an empty task list
+        try {
+            this.taskList = storage.loadTasks();
+            ui.showMessage("Tasks loaded successfully!");
+        } catch (IOException e) {
+            ui.showMessage("Error loading tasks. Starting with an empty task list.");
+            this.taskList = new TaskList();
+        }
+    }
+
+    /**
+     * Starts the main loop for the Hirono application.
+     * Continuously processes user commands until an exit command is issued.
      *
      * @throws IOException     If there is an error reading from or writing to the storage file.
      * @throws HironoException If an error occurs during command execution.
      */
-    public static void main(String[] args) throws IOException, HironoException {
-        // Initialize components
-        Ui ui = new Ui();
-        Storage storage = new Storage("./data/hirono.txt");
-        Parser parser = new Parser();
-        TaskList taskList;
-
+    public void run() throws IOException, HironoException {
         // Show welcome message
         ui.showWelcome();
 
-        // Load tasks from storage
-        try {
-            taskList = storage.loadTasks();
-            ui.showMessage("Tasks loaded successfully!");
-        } catch (IOException e) {
-            ui.showMessage("Error loading tasks. Starting with an empty task list.");
-            taskList = new TaskList();
-        }
-
-        // Main command loop
-        String input = ui.readCommand();
+        // Main command loop for CLI
         while (true) {
             try {
-                // Parse and execute the command
-                Command command = parser.parse(input);
-                command.execute(taskList, ui, storage);
+                String input = ui.readCommand();
+                String response = processInput(input);
+
+                // Display response
+                ui.showMessage(response);
 
                 // Exit the loop if the command is an exit command
-                if (command.isExit()) {
+                if (response.equals("Bye. Hope to see you again soon!")) {
                     break;
                 }
-            } catch (HironoException e) {
-                // Show error message for invalid commands or execution issues
+            } catch (IOException | HironoException e) {
                 ui.showError(e.getMessage());
             }
-
-            // Display divider and read next command
             ui.showDivider();
-            input = ui.readCommand();
         }
+    }
+
+    /**
+     * Processes the user input and returns the response from Hirono.
+     *
+     * @param input The user input string.
+     * @return The response string from Hirono.
+     */
+    public String getResponse(String input) {
+        try {
+            return processInput(input);
+        } catch (IOException | HironoException e) {
+            return "Error: " + e.getMessage();
+        }
+    }
+
+    /**
+     * Processes the user input by parsing and executing the command.
+     *
+     * @param input The user input string.
+     * @return The response string from Hirono.
+     * @throws IOException     If there is an error during file operations.
+     * @throws HironoException If the input is invalid.
+     */
+    private String processInput(String input) throws IOException, HironoException {
+        Command command = parser.parse(input);
+        command.execute(taskList, ui, storage);
+
+        // Return the latest message from the UI
+        return ui.getLatestMessage();
     }
 }

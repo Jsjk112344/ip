@@ -1,8 +1,8 @@
-package hirono.commands;
+package hirono.command;
 
-import hirono.Storage;
-import hirono.Ui;
-import hirono.tasks.TaskList;
+import hirono.storage.Storage;
+import hirono.task.TaskList;
+import hirono.ui.Ui;
 
 /**
  * Represents the command to list all tasks in the task list.
@@ -19,6 +19,7 @@ public class ListCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) {
-        taskList.listTasks();
+        String message = taskList.listTasks();
+        ui.showMessage(message);
     }
 }

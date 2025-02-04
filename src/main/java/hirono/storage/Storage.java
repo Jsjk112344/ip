@@ -1,4 +1,4 @@
-package hirono;
+package hirono.storage;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import hirono.tasks.Deadline;
-import hirono.tasks.Event;
-import hirono.tasks.Task;
-import hirono.tasks.TaskList;
-import hirono.tasks.ToDo;
+import hirono.HironoException;
+import hirono.task.Deadline;
+import hirono.task.Event;
+import hirono.task.Task;
+import hirono.task.TaskList;
+import hirono.task.ToDo;
 
 /**
  * Handles the saving and loading of tasks to and from a file.

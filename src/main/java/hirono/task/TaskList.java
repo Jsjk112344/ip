@@ -1,4 +1,4 @@
-package hirono.tasks;
+package hirono.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -95,15 +95,17 @@ public class TaskList {
      *
      * @param taskId The ID of the task to mark as done.
      */
-    public void markTask(int taskId) {
+    public String markTask(int taskId) {
+        StringBuilder output = new StringBuilder();
         Task task = tasks.get(taskId);
         if (task != null) {
             task.markAsDone();
-            System.out.println("Nice! I've marked this task as done:");
-            System.out.println(taskId + ". " + task.toString());
+            output.append("Nice! I've marked this task as done:\n");
+            output.append(taskId + ". " + task.toString() + "\n");
         } else {
-            System.out.println("Task ID not found!");
+            output.append("Task ID not found!");
         }
+        return output.toString();
     }
 
     /**
@@ -111,25 +113,30 @@ public class TaskList {
      *
      * @param taskId The ID of the task to unmark.
      */
-    public void unmarkTask(int taskId) {
+    public String unmarkTask(int taskId) {
         Task task = tasks.get(taskId);
+        StringBuilder output = new StringBuilder();
         if (task != null) {
             task.unmark();
-            System.out.println("OK, I've marked this task as not done yet:");
-            System.out.println(taskId + ". " + task);
+
+            output.append("OK, I've marked this task as not done yet:\n");
+            output.append(taskId + ". " + task);
         } else {
-            System.out.println("Task ID not found!");
+            output.append("Task ID not found!");
         }
+        return output.toString();
     }
 
     /**
      * Lists all tasks in the list.
      */
-    public void listTasks() {
-        System.out.println("Here are the tasks in your list:");
+    public String listTasks() {
+        StringBuilder output = new StringBuilder();
+        output.append("Here are the tasks in your list:\n");
         for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
-            System.out.println(entry.getKey() + ". " + entry.getValue());
+            output.append(entry.getKey() + ". " + entry.getValue() + "\n");
         }
+        return output.toString();
     }
 
     /**
