@@ -1,4 +1,5 @@
-T | 0 | read book
-D | 0 | return book | 2023-06-06 1800
-T | 1 | join sports club
 D | 0 | return book | 2023-06-11 1800
+D | 0 | read book | 2021-02-03 1700
+T | 0 | read book
+T | 0 | hi
+T | 0 | 2

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import hirono.HironoException;
+import hirono.task.TaskList;
 
 public class TaskListTest {
     private TaskList taskList;
@@ -127,13 +128,12 @@ public class TaskListTest {
     @Test
     public void testListTasksEmpty() {
         // Call listTasks on an empty task list
-        taskList.listTasks();
 
         // Capture the output
-        String result = outputStream.toString().trim();
+        String result = taskList.listTasks();
 
         // Expected output
-        String expected = "Here are the tasks in your list:";
+        String expected = "Here are the tasks in your list:\n";
 
         // Assert the output matches the expected result
         assertEquals(expected, result);

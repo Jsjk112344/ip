@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import hirono.commands.AddCommand;
-import hirono.commands.Command;
+import hirono.command.AddCommand;
+import hirono.command.Command;
+import hirono.parser.Parser;
 public class ParserTest {
     /**
      * @throws HironoException

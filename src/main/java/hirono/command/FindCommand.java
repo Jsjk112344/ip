@@ -1,17 +1,18 @@
-package hirono.commands;
+package hirono.command;
+
 
 import hirono.HironoException;
-import hirono.Storage;
-import hirono.Ui;
-import hirono.tasks.TaskList;
+import hirono.storage.Storage;
+import hirono.task.TaskList;
+import hirono.ui.Ui;
 
 /**
  * Represents a command to list the events or deadlines on a specific date.
  */
-public class DateCommand extends Command {
+public class FindCommand extends Command {
     private final String input;
 
-    public DateCommand(String input) {
+    public FindCommand(String input) {
         this.input = input;
     }
     /**
@@ -24,10 +25,8 @@ public class DateCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws HironoException {
-        String message = taskList.getEventsOnDate(input);
+        String message = taskList.findTasks(input);
         ui.showMessage(message);
     }
 }
-
-
 

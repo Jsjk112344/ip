@@ -1,4 +1,4 @@
-package hirono.tasks;
+package hirono.task;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -43,7 +43,7 @@ public class Deadline extends Task {
      */
     private String[] parseDescription(String description) throws HironoException {
         if (!isValidDeadline(description)) {
-            throw new HironoException("The deadline command is not in the correct"
+            throw new HironoException("The deadline command is not in the correct "
                 + "format: deadline [task name] /by [yyyy-MM-dd HHmm]");
         }
         String[] parts = description.split("/by", 2);
