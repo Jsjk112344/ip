@@ -27,7 +27,8 @@ public class Ui {
     /**
      * Displays the welcome message and the logo for the application.
      */
-    public void showWelcome() {
+    public String showWelcome() {
+        StringBuilder output = new StringBuilder();
         String logo =
                   "                            .-'''-.                   .-'''-.     \n"
                 + "                           '   _    \\                '   _    \\   \n"
@@ -42,7 +43,8 @@ public class Ui {
                 + " | |     | |    | |                    |  |   |  |                \n"
                 + " | '.    | '.   |_|                    |  |   |  |                \n"
                 + " '---'   '---'                         '--'   '--'                \n";
-        showMessage("Hello from\n" + logo + line + "\nHello! I'm Hirono\nWhat can I do for you?\n" + line);
+        output.append("Hello from\n" + logo + line + "\nHello! I'm Hirono\nWhat can I do for you?\n" + line);
+        return output.toString();
     }
 
     /**

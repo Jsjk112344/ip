@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 
 
@@ -53,5 +54,14 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getHironoDialog(response, hironoImage)
         );
         userInput.clear();
+        if (input.equalsIgnoreCase("bye")) {
+            closeWindow();
+        }
+    }
+    
+    private void closeWindow() {
+        // Get the current stage and close it
+        Stage stage = (Stage) dialogContainer.getScene().getWindow();
+        stage.close();
     }
 }
