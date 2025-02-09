@@ -38,7 +38,7 @@ public class MarkCommand extends Command {
 
     /**
      * Marks a task as done and returns a confirmation message.
-     * 
+     *
      * @param tasks The HashMap containing all tasks
      * @return A message confirming the task has been marked as done
      */
@@ -47,7 +47,7 @@ public class MarkCommand extends Command {
         if (task == null) {
             return "Task ID not found!";
         }
-        
+
         task.markAsDone();
         return String.format("Nice! I've marked this task as done:\n%d. %s",
                 taskId,

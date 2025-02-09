@@ -54,7 +54,7 @@ public class TaskList {
         taskCounter = Math.max(taskCounter, newId + 1);
         return newId;
     }
-    
+
 
     /**
      * Adds a task that has been loaded from storage without incrementing the task counter.
@@ -130,7 +130,7 @@ public class TaskList {
         FindCommand findCommand = new FindCommand(input);
         return findCommand.findTasks(tasks);
     }
-    
+
 
     /**
      * Lists events and deadlines occurring on a specific date.

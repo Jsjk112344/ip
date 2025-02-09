@@ -2,8 +2,8 @@ package hirono.command;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.IntStream;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import hirono.exception.HironoException;
 import hirono.storage.Storage;
@@ -55,13 +55,15 @@ public class FindCommand extends Command {
                 .toList();
 
         if (matchingTasks.isEmpty()) {
-            return "No tasks found matching \"" + searchTerm + "\".";
+            return "No tasks found matching \""
+                + searchTerm
+                + "\".";
         }
 
-        return "Here are the matching tasks:\n" +
-                IntStream.range(0, matchingTasks.size())
-                        .mapToObj(i -> (i + 1) + ". " + matchingTasks.get(i).toString())
-                        .collect(Collectors.joining("\n"));
+        return "Here are the matching tasks:\n"
+            + IntStream.range(0, matchingTasks.size())
+                .mapToObj(i -> (i + 1) + ". " + matchingTasks.get(i).toString())
+                    .collect(Collectors.joining("\n"));
     }
 }
 

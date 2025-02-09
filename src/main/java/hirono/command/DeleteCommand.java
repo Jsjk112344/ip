@@ -29,14 +29,14 @@ public class DeleteCommand extends Command {
 
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws IOException, HironoException {
-        storage.deleteTask(taskId);  // Keep using storage's deleteTask for consistency
+        storage.deleteTask(taskId); // Keep using storage's deleteTask for consistency
         String message = deleteTask(taskList.getTasks());
         ui.showMessage(message);
     }
 
     /**
      * Deletes a task from storage file.
-     * 
+     *
      * @param filePath The path to the storage file
      * @param taskNumber The number of the task to delete
      * @throws HironoException If the file doesn't exist or task number is invalid
@@ -72,6 +72,11 @@ public class DeleteCommand extends Command {
         }
     }
 
+    /**
+     * Deletes a task from storage file.
+     * @param tasks The map of tasks to index
+     * @return a string containing the message when a user removes a task
+    */
     public String deleteTask(HashMap<Integer, Task> tasks) throws HironoException {
         if (!tasks.containsKey(taskId)) {
             throw new HironoException("The item you are attempting to delete is out of the range of the list.");
@@ -89,7 +94,7 @@ public class DeleteCommand extends Command {
     private void reorderTasks(HashMap<Integer, Task> tasks) {
         TreeMap<Integer, Task> sortedTasks = new TreeMap<>(tasks);
         tasks.clear();
-        
+
         int newId = 1;
         for (Task task : sortedTasks.values()) {
             tasks.put(newId++, task);

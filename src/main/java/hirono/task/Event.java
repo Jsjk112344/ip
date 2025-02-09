@@ -14,7 +14,7 @@ import hirono.exception.HironoException;
 public class Event extends Task {
     private LocalDateTime fromTime;
     private LocalDateTime toTime;
-
+    private String description;
     /**
      * Constructs an Event object with a specified description.
      *
@@ -25,6 +25,7 @@ public class Event extends Task {
      */
     public Event(String description) throws HironoException {
         super(description, "E");
+        this.description = description;
         String[] parts = parseDescription(description);
 
         try {
@@ -65,6 +66,7 @@ public class Event extends Task {
      * @return {@code true} if the event occurs on the given date, {@code false} otherwise.
      */
     public boolean isOnDate(LocalDate date) {
+        assert date != null : "Date must not be null";
         LocalDate fromDate = fromTime.toLocalDate();
         LocalDate toDate = toTime.toLocalDate();
         return (date.equals(fromDate) || date.equals(toDate))
@@ -78,6 +80,7 @@ public class Event extends Task {
      * @return {@code true} if the description matches the event format, {@code false} otherwise.
      */
     private boolean isValidEvent(String description) {
+        assert description != null : "Description must not be null";
         String eventRegex = "^event\\s+.+\\s+/from\\s+.+\\s+/to\\s+.+$";
         return description.matches(eventRegex);
     }
@@ -89,6 +92,7 @@ public class Event extends Task {
      * @return A {@link LocalDateTime} object representing the parsed date and time.
      */
     private LocalDateTime parseDateTime(String dateTime) {
+        assert dateTime != null && !dateTime.isEmpty() : "DateTime string must not be null or empty";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
         return LocalDateTime.parse(dateTime.trim(), formatter);
     }
