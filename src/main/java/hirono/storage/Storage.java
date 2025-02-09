@@ -1,16 +1,12 @@
 package hirono.storage;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import hirono.command.DeleteCommand;
 import hirono.exception.HironoException;
 import hirono.task.Deadline;
 import hirono.task.Event;
@@ -36,6 +32,10 @@ public class Storage {
         ensureFileExists();
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
     /**
      * Ensures the storage file and its parent directory exist.
      * Creates the file and directory if they do not exist.
@@ -55,44 +55,6 @@ public class Storage {
         }
     }
 
-    /**
-     * Deletes a task from the storage file by its task number.
-     *
-     * @param taskNumber The number of the task to delete (1-based index).
-     * @throws HironoException If the file does not exist or the task number is invalid.
-     * @throws IOException      If an error occurs during file I/O operations.
-     */
-    public void deleteTask(Integer taskNumber) throws HironoException, IOException {
-        File file = new File(filePath);
-
-        // Step 1: Check if the file exists, throw an exception if it doesn't
-        if (!file.exists()) {
-            throw new HironoException("Task file does not exist.");
-        }
-
-        // Step 2: Read all lines into memory
-        List<String> lines = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                lines.add(line);
-            }
-        }
-
-        // Validate the task number
-        if (taskNumber <= 0 || taskNumber > lines.size()) {
-            throw new HironoException("Invalid task number. Task does not exist.");
-        }
-
-        // Remove the task and update the file
-        lines.remove(taskNumber - 1);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-            for (String updatedLine : lines) {
-                writer.write(updatedLine);
-                writer.newLine();
-            }
-        }
-    }
 
     /**
      * Saves the current task list to the storage file.
@@ -107,6 +69,18 @@ public class Storage {
                 writer.write(task.toFileFormat() + System.lineSeparator());
             }
         }
+    }
+
+    /**
+     * Deletes a task from the storage file by its task number.
+     * This method is maintained for testing purposes and delegates to DeleteCommand.
+     *
+     * @param taskNumber The number of the task to delete (1-based index).
+     * @throws HironoException If the file does not exist or the task number is invalid.
+     * @throws IOException If an error occurs during file I/O operations.
+     */
+    public void deleteTask(Integer taskNumber) throws HironoException, IOException {
+        DeleteCommand.deleteFromStorage(filePath, taskNumber);
     }
 
     /**

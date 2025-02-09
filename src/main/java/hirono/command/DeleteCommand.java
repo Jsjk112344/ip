@@ -1,7 +1,14 @@
 package hirono.command;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.TreeMap;
 
 import hirono.exception.HironoException;
@@ -20,28 +27,51 @@ public class DeleteCommand extends Command {
         this.taskId = taskId;
     }
 
-    /**
-     * Executes a delete command on the task specific by its task id
-     * @param taskList The task list containing the tasks
-     * @param ui The UI for displaying messages
-     * @param storage The storage for saving tasks
-     * @throws IOException If there's an error saving to storage
-     * @throws HironoException If the task ID is invalid
-     */
     @Override
     public void execute(TaskList taskList, Ui ui, Storage storage) throws IOException, HironoException {
-        storage.deleteTask(taskId);
+        storage.deleteTask(taskId);  // Keep using storage's deleteTask for consistency
         String message = deleteTask(taskList.getTasks());
         ui.showMessage(message);
     }
 
     /**
-     * Deletes a task and returns a confirmation message.
+     * Deletes a task from storage file.
      * 
-     * @param tasks The HashMap containing all tasks
-     * @return A message confirming the task has been deleted
-     * @throws HironoException If the task ID is invalid or out of range
+     * @param filePath The path to the storage file
+     * @param taskNumber The number of the task to delete
+     * @throws HironoException If the file doesn't exist or task number is invalid
+     * @throws IOException If an error occurs during file operations
      */
+    public static void deleteFromStorage(String filePath, int taskNumber) throws HironoException, IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            throw new HironoException("Task file does not exist.");
+        }
+
+        // Read all lines into memory
+        List<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+
+        // Validate the task number
+        if (taskNumber <= 0 || taskNumber > lines.size()) {
+            throw new HironoException("Invalid task number. Task does not exist.");
+        }
+
+        // Remove the task and update the file
+        lines.remove(taskNumber - 1);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            for (String updatedLine : lines) {
+                writer.write(updatedLine);
+                writer.newLine();
+            }
+        }
+    }
+
     public String deleteTask(HashMap<Integer, Task> tasks) throws HironoException {
         if (!tasks.containsKey(taskId)) {
             throw new HironoException("The item you are attempting to delete is out of the range of the list.");
@@ -56,11 +86,6 @@ public class DeleteCommand extends Command {
                 tasks.size());
     }
 
-    /**
-     * Reorders the tasks to maintain sequential IDs after a deletion.
-     * 
-     * @param tasks The HashMap of tasks to reorder
-     */
     private void reorderTasks(HashMap<Integer, Task> tasks) {
         TreeMap<Integer, Task> sortedTasks = new TreeMap<>(tasks);
         tasks.clear();
