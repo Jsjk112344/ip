@@ -6,6 +6,7 @@ import java.util.Map;
 import hirono.command.AddCommand;
 import hirono.command.DateCommand;
 import hirono.command.DeleteCommand;
+import hirono.command.EditCommand;
 import hirono.command.FindCommand;
 import hirono.command.MarkCommand;
 import hirono.command.UnmarkCommand;
@@ -142,6 +143,17 @@ public class TaskList {
     public String getEventsOnDate(String input) throws HironoException {
         DateCommand dateCommand = new DateCommand(input);
         return dateCommand.getEventsOnDate(tasks);
+    }
+    /**
+     * Lists events and deadlines occurring on a specific date.
+     *
+     * @param input The user input containing the date in yyyy-MM-dd format.
+     * @return an output message when a user edits a task
+     * @throws HironoException If the date is invalid or incorrectly formatted.
+     */
+    public String editTask(String input) throws HironoException {
+        EditCommand editCommand = new EditCommand(input);
+        return editCommand.editTask(tasks);
     }
 
 
