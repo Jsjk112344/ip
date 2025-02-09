@@ -117,8 +117,13 @@ public class Deadline extends Task {
      */
     @Override
     public String handleDescription(String input) {
-        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");
-        return getDescriptionWithoutDeadline() + " (by: " + deadlineTime.format(displayFormatter) + ")";
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mm");
+        String deadlineFormatted = deadlineTime.format(displayFormatter);
+
+        // Manually append "am" or "pm" in lowercase
+        String timeSuffix = deadlineTime.getHour() < 12 ? "am" : "pm";
+
+        return getDescriptionWithoutDeadline() + " (by: " + deadlineFormatted + timeSuffix + ")";
     }
 
     /**

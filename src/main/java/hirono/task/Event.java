@@ -129,10 +129,17 @@ public class Event extends Task {
      */
     @Override
     public String handleDescription(String input) {
-        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mma");
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mm"); 
+        String fromTimeFormatted = fromTime.format(displayFormatter);
+        String toTimeFormatted = toTime.format(displayFormatter);
+
+        // Manually append "am" or "pm" in lowercase
+        String fromTimeSuffix = fromTime.getHour() < 12 ? "am" : "pm";
+        String toTimeSuffix = toTime.getHour() < 12 ? "am" : "pm";
+
         return getDescriptionWithoutEvent()
-            + " (from: " + fromTime.format(displayFormatter)
-            + " to: " + toTime.format(displayFormatter) + ")";
+            + " (from: " + fromTimeFormatted + fromTimeSuffix
+            + " to: " + toTimeFormatted + toTimeSuffix + ")";
     }
 
     /**
