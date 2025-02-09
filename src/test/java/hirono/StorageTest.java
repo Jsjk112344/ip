@@ -1,11 +1,11 @@
 package hirono;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
+import java.util.TimeZone;
 
 import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,6 +20,7 @@ public class StorageTest {
     private static final String TEST_FILE_PATH = "./data/test-hirono.txt";
     private Storage storage;
     private TaskList taskList;
+    private TimeZone originalTimeZone;
 
     /**
      * Sets up the test environment before each test case.
@@ -27,6 +28,10 @@ public class StorageTest {
      */
     @BeforeEach
     public void setUp() {
+        originalTimeZone = TimeZone.getDefault();
+
+        // Set timezone to UTC for consistency
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         storage = new Storage(TEST_FILE_PATH);
         taskList = new TaskList();
     }
@@ -41,6 +46,8 @@ public class StorageTest {
         if (testFile.exists()) {
             testFile.delete(); // Delete test file after each test to avoid conflicts
         }
+        TimeZone.setDefault(originalTimeZone);
+
     }
 
     /**
