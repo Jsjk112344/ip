@@ -1,17 +1,14 @@
 package hirono.task;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import hirono.command.AddCommand;
 import hirono.command.DateCommand;
+import hirono.command.DeleteCommand;
 import hirono.command.FindCommand;
 import hirono.command.MarkCommand;
+import hirono.command.UnmarkCommand;
 import hirono.exception.HironoException;
 
 /**
@@ -75,17 +72,8 @@ public class TaskList {
      * @throws HironoException If the task ID is invalid or out of range.
      */
     public String deleteTask(Integer taskId) throws HironoException {
-        if (!tasks.containsKey(taskId)) {
-            throw new HironoException("The item you are attempting to delete is out of the range of the list.");
-        }
-
-        StringBuilder output = new StringBuilder();
-        output.append("Noted. I've removed this task:\n");
-        output.append(tasks.get(taskId)).append("\n");
-        tasks.remove(taskId);
-        reorderTasks();
-        output.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
-        return output.toString();
+        DeleteCommand deleteCommand = new DeleteCommand(taskId);
+        return deleteCommand.deleteTask(tasks);
     }
 
     /**
@@ -112,17 +100,8 @@ public class TaskList {
      * @param taskId The ID of the task to unmark.
      */
     public String unmarkTask(int taskId) {
-        Task task = tasks.get(taskId);
-        StringBuilder output = new StringBuilder();
-        if (task != null) {
-            task.unmark();
-
-            output.append("OK, I've marked this task as not done yet:\n");
-            output.append(taskId + ". " + task);
-        } else {
-            output.append("Task ID not found!");
-        }
-        return output.toString();
+        UnmarkCommand unmarkCommand = new UnmarkCommand(taskId);
+        return unmarkCommand.unmarkTask(tasks);
     }
 
     /**
@@ -162,18 +141,6 @@ public class TaskList {
         return dateCommand.getEventsOnDate(tasks);
     }
 
-    /**
-     * Reorders the task list after a deletion to maintain sequential IDs.
-     */
-    private void reorderTasks() {
-        HashMap<Integer, Task> reorderedTasks = new HashMap<>();
-        int newTaskId = 1;
 
-        for (Map.Entry<Integer, Task> entry : tasks.entrySet()) {
-            reorderedTasks.put(newTaskId, entry.getValue());
-            newTaskId++;
-        }
 
-        tasks = reorderedTasks;
-    }
 }
