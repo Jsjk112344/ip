@@ -9,7 +9,7 @@ import java.io.PrintStream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import hirono.HironoException;
+import hirono.exception.HironoException;
 import hirono.task.TaskList;
 
 public class TaskListTest {

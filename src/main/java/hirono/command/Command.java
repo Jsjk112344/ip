@@ -2,7 +2,7 @@ package hirono.command;
 
 import java.io.IOException;
 
-import hirono.HironoException;
+import hirono.exception.HironoException;
 import hirono.storage.Storage;
 import hirono.task.TaskList;
 import hirono.ui.Ui;

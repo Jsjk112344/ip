@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import hirono.command.AddCommand;
 import hirono.command.Command;
+import hirono.exception.HironoException;
 import hirono.parser.Parser;
 public class ParserTest {
     /**

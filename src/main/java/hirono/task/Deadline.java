@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import hirono.HironoException;
+import hirono.exception.HironoException;
 
 
 /**

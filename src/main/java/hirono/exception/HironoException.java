@@ -1,4 +1,4 @@
-package hirono;
+package hirono.exception;
 
 /**
  * Represents an exception specific to the Hirono application.

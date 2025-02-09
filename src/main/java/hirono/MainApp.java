@@ -2,6 +2,7 @@ package hirono;
 
 import java.io.IOException;
 
+import hirono.exception.HironoException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
