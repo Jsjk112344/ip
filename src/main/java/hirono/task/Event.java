@@ -129,7 +129,7 @@ public class Event extends Task {
      */
     @Override
     public String handleDescription(String input) {
-        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mm"); 
+        DateTimeFormatter displayFormatter = DateTimeFormatter.ofPattern("d MMM yyyy, h:mm");
         String fromTimeFormatted = fromTime.format(displayFormatter);
         String toTimeFormatted = toTime.format(displayFormatter);
 
