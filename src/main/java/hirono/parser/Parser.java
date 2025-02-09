@@ -4,6 +4,7 @@ import hirono.command.AddCommand;
 import hirono.command.Command;
 import hirono.command.DateCommand;
 import hirono.command.DeleteCommand;
+import hirono.command.EditCommand;
 import hirono.command.ExitCommand;
 import hirono.command.FindCommand;
 import hirono.command.ListCommand;
@@ -44,6 +45,8 @@ public class Parser {
             return new DateCommand(input);
         } else if (input.startsWith("find")) {
             return new FindCommand(input);
+        } else if (input.startsWith("edit")) {
+            return new EditCommand(input);
         } else if (input.equals("bye")) {
             return new ExitCommand();
         } else {

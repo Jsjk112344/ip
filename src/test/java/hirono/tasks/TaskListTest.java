@@ -139,6 +139,73 @@ public class TaskListTest {
         assertEquals(expected, result);
     }
 
+    @Test
+    public void testEditTask() throws Exception {
+        // Add some initial tasks
+        taskList.addTask("todo read book", "todo");
+        taskList.addTask("deadline submit report /by 2023-11-02 1800", "deadline");
+        taskList.addTask("event team meeting /from 2023-11-02 1400 /to 2023-11-02 1600", "event");
+
+        // Test editing a todo task
+        String result = taskList.editTask("edit 1: todo finish homework");
+        assertEquals("Got it. I've edited the task to:\n"
+            + "1. [T][ ] finish homework", result);
+
+        // Test editing a deadline task
+        result = taskList.editTask("edit 2: deadline complete assignment /by 2023-12-01 2359");
+        assertEquals("Got it. I've edited the task to:\n"
+            + "2. [D][ ] complete assignment (by: 1 Dec 2023, 11:59pm)", result);
+
+        // Test editing an event task
+        result = taskList.editTask("edit 3: event project meeting /from 2023-12-05 1000 /to 2023-12-05 1200");
+        assertEquals("Got it. I've edited the task to:\n"
+            + "3. [E][ ] project meeting (from: 5 Dec 2023, 10:00am to: 5 Dec 2023, 12:00pm)", result);
+
+        // Test preserving done status
+        taskList.markTask(1); // Mark the first task as done
+        result = taskList.editTask("edit 1: todo study math");
+        assertEquals("Got it. I've edited the task to:\n"
+            + "1. [T][X] study math", result);
+    }
+
+    @Test
+    public void testEditTaskEdgeCases() throws Exception {
+        // Add a test task
+        taskList.addTask("todo read book", "todo");
+
+        // Test invalid task ID
+        try {
+            taskList.editTask("edit 999: todo new task");
+            assertTrue(false, "Expected HironoException for invalid task ID");
+        } catch (HironoException e) {
+            assertEquals("Task ID not found!", e.getMessage());
+        }
+
+        // Test invalid edit format (missing colon)
+        try {
+            taskList.editTask("edit 1 todo new task");
+            assertTrue(false, "Expected HironoException for invalid format");
+        } catch (HironoException e) {
+            assertEquals("Invalid edit format. Please use: edit <task ID>: <new task info>", e.getMessage());
+        }
+
+        // Test type mismatch (trying to change todo to deadline)
+        try {
+            taskList.editTask("edit 1: deadline submit report /by 2023-12-01");
+            assertTrue(false, "Expected HironoException for type mismatch");
+        } catch (HironoException e) {
+            assertEquals("Cannot change task type. Original task was: todo", e.getMessage());
+        }
+
+        // Test missing task description
+        try {
+            taskList.editTask("edit 1: todo");
+            assertTrue(false, "Expected HironoException for missing description");
+        } catch (HironoException e) {
+            assertEquals("Invalid task format. Please provide task type and description.", e.getMessage());
+        }
+    }
+
 
 }
 
