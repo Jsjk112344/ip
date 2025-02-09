@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import hirono.HironoException;
+import hirono.exception.HironoException;
 
 /**
  * Represents an event task that includes a description, a start time (/from), and an end time (/to).

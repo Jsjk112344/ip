@@ -3,6 +3,7 @@ package hirono;
 import java.io.IOException;
 
 import hirono.command.Command;
+import hirono.exception.HironoException;
 import hirono.parser.Parser;
 import hirono.storage.Storage;
 import hirono.task.TaskList;
@@ -26,7 +27,7 @@ public class Hirono {
      *
      * @throws IOException If there is an error reading from the storage file.
      */
-    public Hirono() throws IOException, HironoException {
+    public Hirono() {
         this.ui = new Ui();
         this.storage = new Storage("./data/hirono.txt");
         this.parser = new Parser();
@@ -35,7 +36,7 @@ public class Hirono {
         try {
             this.taskList = storage.loadTasks();
             ui.showMessage("Tasks loaded successfully!");
-        } catch (IOException e) {
+        } catch (IOException | HironoException e) {
             ui.showMessage("Error loading tasks. Starting with an empty task list.");
             this.taskList = new TaskList();
         }
@@ -48,7 +49,7 @@ public class Hirono {
      * @throws IOException     If there is an error reading from or writing to the storage file.
      * @throws HironoException If an error occurs during command execution.
      */
-    public void run() throws IOException, HironoException {
+    public void run() {
         // Show welcome message
         ui.showWelcome();
 

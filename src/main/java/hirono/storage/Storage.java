@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import hirono.HironoException;
+import hirono.exception.HironoException;
 import hirono.task.Deadline;
 import hirono.task.Event;
 import hirono.task.Task;

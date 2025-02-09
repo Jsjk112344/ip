@@ -9,6 +9,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import hirono.exception.HironoException;
 import hirono.storage.Storage;
 import hirono.task.TaskList;
 
