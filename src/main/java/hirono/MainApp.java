@@ -18,7 +18,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws IOException, HironoException {
         hirono = new Hirono();
-        
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();

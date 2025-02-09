@@ -58,7 +58,7 @@ public class MainWindow extends AnchorPane {
             closeWindow();
         }
     }
-    
+
     private void closeWindow() {
         // Get the current stage and close it
         Stage stage = (Stage) dialogContainer.getScene().getWindow();
