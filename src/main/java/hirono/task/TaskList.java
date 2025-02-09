@@ -49,6 +49,8 @@ public class TaskList {
             newId++;
         }
         tasks.put(newId, task);
+        assert tasks.containsKey(taskCounter) : "Task should be successfully added to the list";
+
         taskCounter = Math.max(taskCounter, newId + 1);
         return newId;
     }
@@ -74,6 +76,7 @@ public class TaskList {
     public String deleteTask(Integer taskId) throws HironoException {
         DeleteCommand deleteCommand = new DeleteCommand(taskId);
         return deleteCommand.deleteTask(tasks);
+
     }
 
     /**
