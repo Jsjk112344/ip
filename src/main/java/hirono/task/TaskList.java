@@ -43,6 +43,8 @@ public class TaskList {
             throw new HironoException("Invalid task type.");
         }
         tasks.put(taskCounter, task);
+        assert tasks.containsKey(taskCounter) : "Task should be successfully added to the list";
+
         output.append("Got it. I've added this task:\n");
         output.append(tasks.get(taskCounter).toString()).append("\n");
         output.append("Now you have ").append(taskCounter).append(" tasks in the list.");
@@ -77,6 +79,8 @@ public class TaskList {
         output.append(tasks.get(taskId)).append("\n");
         tasks.remove(taskId);
         reorderTasks();
+
+        assert !tasks.containsKey(taskId) : "Task should be removed from the list";
         output.append("Now you have ").append(tasks.size()).append(" tasks in the list.");
         return output.toString();
     }
