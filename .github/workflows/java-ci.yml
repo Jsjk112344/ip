@@ -29,6 +29,8 @@ jobs:
         with:
           java-version: '17'
           java-package: jdk+fx
+      - name: Set timezone to UTC
+        run: echo "::set-env name=TZ::UTC"
 
       - name: Build and check with Gradle
         run: ./gradlew check
