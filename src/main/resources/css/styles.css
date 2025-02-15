@@ -1,0 +1,85 @@
+.root {
+    -fx-background-color: #2E1A47; /* Dark purple background */
+}
+
+#dialogContainer {
+    -fx-padding: 10;
+    -fx-background-color: #F3EAF7; /* Soft white-pink background */
+    -fx-border-radius: 10;
+}
+
+.scroll-pane {
+    -fx-background: transparent;
+    -fx-border-color: transparent;
+}
+
+#userInput {
+    -fx-background-color: #FFFFFF; /* White background */
+    -fx-border-color: #A172C7; /* Light purple border */
+    -fx-border-radius: 10;
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+    -fx-text-fill: #3E2754;
+}
+
+#sendButton {
+    -fx-background-color: #A172C7; /* Light purple */
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-border-radius: 10;
+}
+
+#sendButton:hover {
+    -fx-background-color: #C69EE0; /* Lighter purple when hovered */
+}
+
+.label {
+    -fx-background-color: #FFFFFF; /* White speech bubbles */
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 2);
+}
+
+#dialog {
+    -fx-background-color: #E5D5F3; /* Softer purple */
+    -fx-text-fill: #3E2754; /* Dark text */
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+/* User Dialog Box */
+.hbox {
+    -fx-spacing: 10;
+    -fx-alignment: center-right;
+}
+
+/* Bot Dialog Box */
+.hbox-bot {
+    -fx-spacing: 10;
+    -fx-alignment: center-left;
+}
+
+.image-view {
+    -fx-clip: inherit;
+    -fx-border-radius: 50%; /* Circular border */
+    -fx-background-radius: 50%; /* Ensure roundness */
+}
+
+.error-message {
+    -fx-text-fill: red; /* Set error messages to red */
+    -fx-font-weight: bold;
+    -fx-background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+    -fx-padding: 5px;
+    -fx-border-color: red;
+    -fx-border-radius: 5px;
+}
+
+
+#displayPicture {
+    -fx-background-radius: 50%;
+    -fx-border-radius: 50%;
+    -fx-clip: rect(0px, 99px, 99px, 0px);
+    -fx-shape: "M 50, 50 m -50, 0 a 50,50 0 1,0 100,0 a 50,50 0 1,0 -100,0";
+}

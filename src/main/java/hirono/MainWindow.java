@@ -49,15 +49,31 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = hirono.getResponse(input);
+        
+        // Check if response is an error (adjust condition based on your actual error format)
+        boolean isError = response.toLowerCase().contains("error") || response.toLowerCase().contains("invalid");
+
+        // Create a dialog box for Hirono's response
+        DialogBox hironoDialog = DialogBox.getHironoDialog(response, hironoImage);
+        
+        // Apply error styling if it's an error message
+        if (isError) {
+            hironoDialog.getStyleClass().add("error-message");
+        }
+
+        // Add user input and Hirono response to dialog container
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getHironoDialog(response, hironoImage)
+                hironoDialog
         );
+        
         userInput.clear();
+
         if (input.equalsIgnoreCase("bye")) {
             closeWindow();
         }
     }
+
 
     private void closeWindow() {
         // Get the current stage and close it
