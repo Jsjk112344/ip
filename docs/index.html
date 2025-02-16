@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hirono: Your Personal Task Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Hirono: Your Personal Task Manager</h1>
+        <p>"The art of progress is to preserve order amid change and to preserve change amid order." – Alfred North Whitehead 🧠</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#usage">Getting Started</a></li>
+            <li><a href="#commands">Commands</a></li>
+        </ul>
+    </nav>
+
+    <section id="about">
+        <h2>📌 About Hirono</h2>
+        <p>Hirono is a **text-based task management application** designed to help you stay **organized and productive**.</p>
+        <ul>
+            <li>✅ **Easy to use**</li>
+            <li>⚡ **Fast & Efficient**</li>
+            <li>🔧 **Customizable for your needs**</li>
+        </ul>
+    </section>
+
+    <section id="features">
+        <h2>🚀 Features</h2>
+        <ul>
+            <li>📌 **Task Management** - Add, delete, mark, and unmark tasks.</li>
+            <li>📅 **Event Scheduling** - Manage deadlines and events with time tracking.</li>
+            <li>🔎 **Search & Filter** - Quickly find tasks using keywords or dates.</li>
+        </ul>
+    </section>
+
+    <section id="usage">
+        <h2>💡 Getting Started</h2>
+        <p>Run the application using:</p>
+        <pre><code>java -jar hirono.jar</code></pre>
+        <p>Add your first task:</p>
+        <pre><code>todo read book</code></pre>
+        <p>Explore the features and let Hirono organize your life!</p>
+    </section>
+
+    <section id="commands">
+        <h2>📌 Task Management Commands</h2>
+
+        <h3>📝 Adding Tasks</h3>
+        <p>Add a new task:</p>
+        <pre><code>todo [task name]</code></pre>
+        <pre><code>deadline [task name] /by [yyyy-MM-dd HHmm]</code></pre>
+        <pre><code>event [event name] /from [yyyy-MM-dd HHmm] /to [yyyy-MM-dd HHmm]</code></pre>
+
+        <h3>✅ Marking a Task as Done</h3>
+        <p>Mark a task as completed:</p>
+        <pre><code>mark [task number]</code></pre>
+
+        <h3>🔄 Unmarking a Task</h3>
+        <p>Unmark a task to mark it as incomplete:</p>
+        <pre><code>unmark [task number]</code></pre>
+
+        <h3>🗑 Deleting a Task</h3>
+        <p>Remove a task from the list:</p>
+        <pre><code>delete [task number]</code></pre>
+
+        <h3>🔍 Finding Tasks</h3>
+        <p>Search for tasks containing a keyword:</p>
+        <pre><code>find [keyword]</code></pre>
+
+        <h3>📅 Filtering Tasks Due Today</h3>
+        <p>List all tasks due today:</p>
+        <pre><code>tasks</code></pre>
+        <p><strong>Expected Output:</strong></p>
+        <pre><code>Tasks due today:
+[D][ ] Return book (by: 9th of February 2025, 5:00pm)</code></pre>
+    </section>
+
+    <footer>
+        <p>Made with ❤️ by Hirono Developers</p>
+    </footer>
+
+</body>
+</html>
