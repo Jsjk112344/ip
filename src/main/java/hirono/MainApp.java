@@ -25,6 +25,7 @@ public class MainApp extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setResizable(true); // Enable resizing
             fxmlLoader.<MainWindow>getController().setHirono(hirono); // inject the Hirono instance
             stage.show();
         } catch (IOException e) {

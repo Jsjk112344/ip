@@ -1,13 +1,24 @@
 package hirono.task;
 
+import hirono.exception.HironoException;
+
 /**
  * Describes a basic task to do
  */
 public class ToDo extends Task {
-    public ToDo(String description) {
+    public ToDo(String description) throws HironoException{
         super(description, "T");
+        if (!isValidToDo(description)) {
+            throw new HironoException("The todo command is not in the correct format:"
+                + "todo <description>");
+        }
     }
 
+
+    private boolean isValidToDo(String description) {
+        String todoRegex = "^todo\\s+.+$";
+        return description.matches(todoRegex);
+    }
     /**
      * @return String
      */

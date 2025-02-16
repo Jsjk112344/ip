@@ -1,5 +1,5 @@
 T | 1 | hello
-T | 1 | return moomowkfdenj
 E | 0 | meet cool people | 2024-06-11 1700 | 2024-06-11 1800
 D | 0 | test | 2026-01-22 0800
-T | 0 | read book
+T | 0 | find job
+E | 0 | team meeting | 2025-02-17 1700 | 2025-02-17 1800
