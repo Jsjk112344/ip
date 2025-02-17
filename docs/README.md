@@ -1,97 +1,134 @@
 # Hirono: Your Personal Task Manager
+
 > "The art of progress is to preserve order amid change and to preserve change amid order." – Alfred North Whitehead 🧠
-Hirono is a **text-based task management application** designed to help you **stay organized and productive**.
+
+Hirono is a **text-based task management application** designed to help you stay **organized and productive**. It offers both command-line and GUI interfaces to manage your daily tasks efficiently.
+
 ![UI Preview](Ui.png)
-## 📌 About Hirono
-Hirono is a **command-line and GUI-based task management application** that helps you manage your daily tasks efficiently.
-### Why use Hirono?
-- ✅ **Easy to use** – Simple text-based commands for quick task management.
-- ⚡ **Fast & Efficient** – Lightweight and responsive.
-- 🔧 **Customizable** – Supports different task types (*ToDo, Deadlines, Events*).
----
+
+## ✨ Key Benefits
+
+- ✅ **Easy to use** - Simple text-based commands for quick task management
+- ⚡ **Fast & Efficient** - Lightweight and responsive application
+- 🔧 **Customizable** - Supports multiple task types (ToDo, Deadlines, Events)
+
 ## 🚀 Features
-### 📝 **Task Management**
-- Add, delete, mark, and unmark tasks.
-- Support for **"ToDo"**, **"Deadline"**, and **"Event"** tasks.
-### 📅 **Event Scheduling**
-- Keep track of deadlines and events.
-- Manage time efficiently with **precise scheduling**.
-### 🔍 **Search & Filter**
-- Quickly **find tasks** by keywords or dates.
-- Filter tasks that are due today.
----
+
+### 📝 Task Management
+- Add, delete, mark, and unmark tasks with simple commands
+- Support for three task types:
+  - **ToDo**: Simple tasks without deadlines
+  - **Deadline**: Tasks with specific due dates
+  - **Event**: Activities with start and end times
+
+### 📅 Event Scheduling
+- Keep track of deadlines and events with precision
+- Manage time efficiently with detailed scheduling options
+- Set specific dates and times for better organization
+
+### 🔎 Search & Filter
+- Find tasks quickly using keywords
+- Filter tasks by date
+- View all tasks due on a specific day
+
 ## 💡 Getting Started
-### 1️⃣ **Running the Application**
+
+### System Requirements
+```
+- Java 11 or higher
+- 50MB free disk space
+- Command-line interface or GUI terminal
+```
+
+### Installation
 To run the application, use:
-```sh
+```
 java -jar hirono.jar
 ```
-### 2️⃣ **Adding Tasks**
-To add new tasks to your list, use:
-```sh
-# Todo Tasks
-todo <description>
+
+## 📚 Command Reference
+
+### Adding Tasks
+
+1. **Todo Tasks**
+```
+todo [task name]
 Example: todo read book
+```
 
-# Deadline Tasks
-deadline <description> /by <date-time>
+2. **Deadline Tasks**
+```
+deadline [task name] /by [yyyy-MM-dd HHmm]
 Example: deadline finish report /by 2023-12-01 2359
+```
 
-# Event Tasks
-event <description> /from <start-time> /to <end-time>
+3. **Event Tasks**
+```
+event [event name] /from [yyyy-MM-dd HHmm] /to [yyyy-MM-dd HHmm]
 Example: event team meeting /from 2023-12-01 1400 /to 2023-12-01 1600
 ```
-### 3️⃣ **Managing Tasks**
-To manage your existing tasks, use:
-```sh
-# Mark and Unmark Tasks
-mark <task-number>
-Example: mark 1
 
-unmark <task-number>
-Example: unmark 1
+### Managing Tasks
 
-# Delete Tasks
-delete <task-number>
-Example: delete 1
+1. **Mark/Unmark Tasks**
+```
+mark [task number]
+unmark [task number]
+```
 
-# Edit Tasks
-edit <task-number>: <task-type> <new-description>
+2. **Delete Tasks**
+```
+delete [task number]
+```
+
+3. **Edit Tasks**
+```
+edit [task number]: [task-type] [new-description]
 Examples:
 edit 1: todo study mathematics
 edit 2: deadline complete assignment /by 2023-12-15 2359
 edit 3: event project meeting /from 2023-12-10 1000 /to 2023-12-10 1200
 ```
-### 4️⃣ **Viewing Tasks**
-To view and search your tasks, use:
-```sh
-# List all tasks
+
+### Viewing and Finding Tasks
+
+1. **List All Tasks**
+```
 list
+```
 
-# View tasks by date
-date YYYY-MM-DD
+2. **View Tasks by Date**
+```
+date [yyyy-MM-dd]
 Example: date 2023-12-01
+```
 
-# Find tasks by keyword
-find <keyword>
+3. **Find Tasks by Keyword**
+```
+find [keyword]
 Example: find book
 ```
-### 5️⃣ **Date Time Format**
-Use these formats for deadlines and events:
-```sh
-# Format
-Date: YYYY-MM-DD
-Time: HHMM (24-hour)
 
-# Examples
+### Date and Time Format
+
+Use the following format for specifying dates and times:
+```
+Date: YYYY-MM-DD
+Time: HHMM (24-hour format)
+
+Examples:
 2023-12-01 2359    # December 1st, 11:59 PM
 2023-12-25 0900    # December 25th, 9:00 AM
 ```
-### 6️⃣ **Requirements**
-System requirements to run Hirono:
-```sh
-# Minimum Requirements
-Java 11 or higher
-50MB free disk space
-Command-line interface or GUI terminal
+
+## Example Output
+
+When using the date command, you'll see output like this:
 ```
+Here are the events and deadlines on 2026-01-22:
+1. [D][ ] test (by: 22 Jan 2026, 8:00am)
+```
+
+---
+
+Made with ❤️ by Hirono Developers
