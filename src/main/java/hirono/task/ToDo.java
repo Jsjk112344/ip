@@ -6,7 +6,10 @@ import hirono.exception.HironoException;
  * Describes a basic task to do
  */
 public class ToDo extends Task {
-    public ToDo(String description) throws HironoException{
+    /**
+     * Main ToDO constructor
+     */
+    public ToDo(String description) throws HironoException {
         super(description, "T");
         if (!isValidToDo(description)) {
             throw new HironoException("The todo command is not in the correct format:"

@@ -42,10 +42,10 @@ public class MarkCommand extends Command {
      * @param tasks The HashMap containing all tasks
      * @return A message confirming the task has been marked as done
      */
-    public String markTask(HashMap<Integer, Task> tasks) {
+    public String markTask(HashMap<Integer, Task> tasks) throws HironoException {
         Task task = tasks.get(taskId);
         if (task == null) {
-            return "Task ID not found!";
+            throw new HironoException("Task ID Not Found!");
         }
 
         task.markAsDone();

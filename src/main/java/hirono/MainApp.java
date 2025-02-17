@@ -24,10 +24,10 @@ public class MainApp extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(MainApp.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
-            stage.setTitle("Hirono - Your Personal Task Manager"); 
+            stage.setTitle("Hirono - Your Personal Task Manager");
             stage.setScene(scene);
-            stage.setResizable(true); // Enable resizing
-            fxmlLoader.<MainWindow>getController().setHirono(hirono); // inject the Hirono instance
+            stage.setResizable(true);
+            fxmlLoader.<MainWindow>getController().setHirono(hirono);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

@@ -94,7 +94,7 @@ public class TaskList {
      *
      * @param taskId The ID of the task to mark as done.
      */
-    public String markTask(int taskId) {
+    public String markTask(int taskId) throws HironoException {
         MarkCommand markCommand = new MarkCommand(taskId);
         return markCommand.markTask(tasks);
     }
@@ -103,7 +103,7 @@ public class TaskList {
      *
      * @param taskId The ID of the task to unmark.
      */
-    public String unmarkTask(int taskId) {
+    public String unmarkTask(int taskId) throws HironoException {
         UnmarkCommand unmarkCommand = new UnmarkCommand(taskId);
         return unmarkCommand.unmarkTask(tasks);
     }
