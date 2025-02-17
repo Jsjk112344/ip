@@ -1,6 +1,7 @@
 # Hirono: Your Personal Task Manager
 > "The art of progress is to preserve order amid change and to preserve change amid order." – Alfred North Whitehead 🧠
 Hirono is a **text-based task management application** designed to help you **stay organized and productive**.
+![UI Preview](Ui.png)
 ## 📌 About Hirono
 Hirono is a **command-line and GUI-based task management application** that helps you manage your daily tasks efficiently.
 ### Why use Hirono?
